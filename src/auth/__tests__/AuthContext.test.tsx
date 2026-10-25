@@ -2,14 +2,17 @@ import '@/web-app-ox/test/setup'
 import { act, render, renderHook, screen, waitFor } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { apiGet } from '@/web-app-ox/api/client'
+import { ApiError, apiGet } from '@/web-app-ox/api/client'
 import type { MeResponse } from '@/web-app-ox/api/types'
 import { deferred, makeProfile } from '@/web-app-ox/test/fixtures'
 import { AuthProvider } from '@/web-app-ox/auth/AuthContext'
 import type { AuthModule, AuthUser } from '@/web-app-ox/auth/types'
 import { useAuth } from '@/web-app-ox/auth/useAuth'
 
-vi.mock('@/web-app-ox/api/client', () => ({ apiGet: vi.fn() }))
+vi.mock('@/web-app-ox/api/client', async () => {
+  const actual = await vi.importActual<typeof import('@/web-app-ox/api/client')>('@/web-app-ox/api/client')
+  return { ...actual, apiGet: vi.fn() }
+})
 
 const loadAuthMock = vi.hoisted(() => vi.fn())
 vi.mock('@/web-app-ox/auth/authModule', () => ({ loadAuth: loadAuthMock }))
@@ -188,6 +191,13 @@ describe('AuthProvider actions', () => {
     mockedGet.mockRejectedValue(failure)
     const { result } = await setup()
     await expect(result.current.signInWithEmail('x@y.test', 'pw')).rejects.toBe(failure)
+    expect(fakeAuth.signOutUser).toHaveBeenCalledTimes(1)
+  })
+
+  it('signInWithEmail signs out and resolves false when the server refuses the account (403)', async () => {
+    mockedGet.mockRejectedValue(new ApiError(403, 'FORBIDDEN_ACCOUNT', 'This account type is not allowed'))
+    const { result } = await setup()
+    await expect(result.current.signInWithEmail('x@y.test', 'pw')).resolves.toBe(false)
     expect(fakeAuth.signOutUser).toHaveBeenCalledTimes(1)
   })
 
