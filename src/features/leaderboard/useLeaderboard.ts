@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { apiGet } from '../../api/client'
+import { apiGet } from 'web-app-ox/api/client'
 import type { LeaderboardEntry } from '../../../shared/types'
 
 export type LeaderboardState =

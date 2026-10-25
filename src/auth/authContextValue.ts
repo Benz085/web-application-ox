@@ -1,6 +1,6 @@
 import { createContext } from 'react'
-import type { Profile } from '../api/types'
-import type { AuthUser } from './types'
+import type { Profile } from 'web-app-ox/api/types'
+import type { AuthUser } from 'web-app-ox/auth/types'
 
 export interface AuthContextValue {
   user: AuthUser | null

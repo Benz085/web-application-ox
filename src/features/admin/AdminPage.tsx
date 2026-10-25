@@ -1,6 +1,6 @@
 import { useMemo, useState, type ChangeEvent } from 'react'
 import type { AdminPlayer } from '../../../shared/types'
-import { useAdminPlayers } from './useAdminPlayers'
+import { useAdminPlayers } from 'web-app-ox/features/admin/useAdminPlayers'
 import {
   DEFAULT_SORT,
   SORT_KEYS,
@@ -11,7 +11,7 @@ import {
   type SortDir,
   type SortKey,
   type SortState,
-} from './sort'
+} from 'web-app-ox/features/admin/sort'
 
 const COLUMNS: SortKey[] = ['email', 'score', 'streak', 'wins', 'losses', 'draws', 'lastPlayedAt']
 

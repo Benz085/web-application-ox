@@ -1,4 +1,4 @@
-import type { AuthUser } from './types'
+import type { AuthUser } from 'web-app-ox/auth/types'
 
 export const ADMIN_DISPLAY_NAME = 'Admin OX'
 export const ADMIN_INITIALS = 'AO'

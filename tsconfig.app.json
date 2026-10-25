@@ -15,6 +15,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "paths": { "web-app-ox/*": ["./src/*"] },
 
     /* Linting */
     "strict": true,

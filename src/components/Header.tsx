@@ -1,5 +1,5 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { useAuth } from '../auth/useAuth'
+import { useAuth } from 'web-app-ox/auth/useAuth'
 
 function LogoMark() {
   return (
