@@ -10,3 +10,5 @@ test-results
 .DS_Store
 *.log
 *-firebase-adminsdk-*.json
+.claude
+/firebase.config.ts
