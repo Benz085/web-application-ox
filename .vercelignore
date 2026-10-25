@@ -1,0 +1,7 @@
+api/__tests__
+server/__tests__
+shared/__tests__
+e2e
+playwright-report
+test-results
+coverage
