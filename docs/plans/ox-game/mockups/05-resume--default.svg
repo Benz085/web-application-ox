@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <title>05 Resume banner - unfinished game on the Play page</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EEF2FF"/>
+      <stop offset="1" stop-color="#F8FAFC"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#1E1B4B" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <style>
+    text{font-family:system-ui,sans-serif;fill:#0F172A}
+    .h1{font-size:30px;font-weight:800}
+    .b{font-size:16px}
+    .s{font-size:14px;fill:#475569}
+    .xs{font-size:12px;fill:#64748B}
+    .bd{font-weight:700}
+    .sb{font-weight:600}
+    .m{text-anchor:middle}
+    .r{text-anchor:end}
+    .w{fill:#FFFFFF}
+    .a{fill:#4338CA}
+    .big{font-size:44px;font-weight:800}
+    .n{font-size:12px;fill:#64748B;font-style:italic}
+  </style>
+  <rect x="0" y="0" width="1440" height="900" fill="url(#bg)"/>
+
+  <!-- Header (player, Play active) -->
+  <rect x="0" y="0" width="1440" height="64" fill="#FFFFFF"/>
+  <line x1="0" y1="64.5" x2="1440" y2="64.5" stroke="#E2E8F0"/>
+  <rect x="40" y="16" width="32" height="32" rx="9" fill="url(#brand)"/>
+  <path d="M48 24 L56 32 M56 24 L48 32" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="61" cy="39" r="4" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+  <text x="82" y="39" style="font-size:20px;font-weight:700">OX Game</text>
+  <rect x="186" y="16" width="62" height="32" rx="16" fill="#EEF2FF"/>
+  <text x="217" y="37" class="b bd m a">Play</text>
+  <rect x="199" y="58" width="36" height="4" rx="2" fill="#4F46E5"/>
+  <text x="314" y="37" class="b m" style="fill:#475569">Leaderboard</text>
+  <circle cx="1196" cy="32" r="17" fill="url(#brand)" stroke="#E0E7FF" stroke-width="3"/>
+  <text x="1196" y="36" class="xs m bd w">AM</text>
+  <text x="1222" y="37" class="sb" style="font-size:14px">Alex Morgan</text>
+  <rect x="1330" y="16" width="90" height="32" rx="16" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="1375" y="37" class="s m sb" style="fill:#334155">Sign out</text>
+
+  <!-- Resume banner -->
+  <rect x="240" y="92" width="900" height="80" rx="18" fill="#FFFFFF" stroke="#A5B4FC" stroke-width="1.5" filter="url(#sh)"/>
+  <rect x="240" y="92" width="8" height="80" rx="4" fill="#4F46E5"/>
+  <rect x="262" y="106" width="52" height="52" rx="10" fill="#EEF2FF"/>
+  <g stroke="#C7D2FE" stroke-width="1.5">
+    <line x1="279.3" y1="110" x2="279.3" y2="154"/>
+    <line x1="296.6" y1="110" x2="296.6" y2="154"/>
+    <line x1="266" y1="123.3" x2="310" y2="123.3"/>
+    <line x1="266" y1="140.6" x2="310" y2="140.6"/>
+  </g>
+  <path d="M267 110 L275 118 M275 110 L267 118" stroke="#4F46E5" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="288" cy="132" r="4.5" fill="none" stroke="#EA580C" stroke-width="2.5"/>
+  <path d="M301 127 L309 135 M309 127 L301 135" stroke="#4F46E5" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="271" cy="149" r="4.5" fill="none" stroke="#EA580C" stroke-width="2.5"/>
+  <text x="332" y="126" class="b bd">You have an unfinished game</text>
+  <text x="332" y="150" class="s">Difficulty: Hard · 4 moves played · It's your turn.</text>
+  <rect x="976" y="110" width="146" height="44" rx="12" fill="#4F46E5"/>
+  <text x="1049" y="138" class="b bd m w">Resume game</text>
+
+  <text x="240" y="228" class="h1">New game</text>
+
+  <rect x="240" y="260" width="520" height="380" rx="20" fill="#FFFFFF" stroke="#E2E8F0" filter="url(#sh)"/>
+  <text x="264" y="298" class="b bd">Choose difficulty</text>
+  <rect x="264" y="318" width="472" height="84" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5"/>
+  <circle cx="294" cy="360" r="10" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+  <text x="318" y="354" class="b bd">Easy</text>
+  <text x="318" y="378" class="s">The bot mostly moves at random.</text>
+  <rect x="664" y="346" width="52" height="24" rx="12" fill="#ECFDF5" stroke="#A7F3D0"/>
+  <g fill="#059669"><rect x="676" y="360" width="5" height="5" rx="1"/><rect x="684" y="356" width="5" height="9" rx="1" opacity="0.3"/><rect x="692" y="352" width="5" height="13" rx="1" opacity="0.3"/></g>
+  <rect x="264" y="414" width="472" height="84" rx="14" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <circle cx="294" cy="456" r="10" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2"/>
+  <circle cx="294" cy="456" r="5" fill="#4F46E5"/>
+  <text x="318" y="450" class="b bd">Hard</text>
+  <text x="318" y="474" class="s">The bot plays smart but sometimes makes a mistake.</text>
+  <rect x="640" y="434" width="80" height="24" rx="12" fill="#4F46E5"/>
+  <text x="680" y="450" class="xs bd m w">Selected</text>
+  <!-- Secondary button (Start new game is secondary while a game is unfinished) -->
+  <rect x="264" y="520" width="472" height="52" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="500" y="552" class="b bd m" style="fill:#1E293B">Start new game</text>
+  <text x="264" y="604" class="xs">You play X and always move first.</text>
+  <text x="264" y="622" class="xs">Scoring is the same on both levels.</text>
+
+  <g transform="translate(800,260)">
+    <rect width="340" height="300" rx="20" fill="#FFFFFF" stroke="#E2E8F0" filter="url(#sh)"/>
+    <text x="24" y="38" class="b bd">Your stats</text>
+    <text x="24" y="74" class="s">Score</text>
+    <text x="24" y="118" class="big" style="fill:#4338CA">5</text>
+    <text x="24" y="150" class="s">Win streak</text>
+    <circle cx="34" cy="172" r="10" fill="#F59E0B" stroke="#D97706" stroke-width="2"/>
+    <circle cx="62" cy="172" r="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+    <circle cx="90" cy="172" r="10" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+    <rect x="110" y="161" width="44" height="22" rx="11" fill="#FFFBEB" stroke="#FCD34D"/>
+    <text x="132" y="177" class="bd m" style="font-size:13px;fill:#92400E">1/3</text>
+    <text x="24" y="206" class="xs">2 more wins in a row for a +1 bonus</text>
+    <rect x="24" y="222" width="92" height="56" rx="12" fill="#F0FDF4"/>
+    <text x="70" y="248" class="b bd m" style="fill:#15803D">7</text>
+    <text x="70" y="268" class="xs m">Wins</text>
+    <rect x="124" y="222" width="92" height="56" rx="12" fill="#FEF2F2"/>
+    <text x="170" y="248" class="b bd m" style="fill:#B91C1C">2</text>
+    <text x="170" y="268" class="xs m">Losses</text>
+    <rect x="224" y="222" width="92" height="56" rx="12" fill="#F1F5F9"/>
+    <text x="270" y="248" class="b bd m" style="fill:#334155">3</text>
+    <text x="270" y="268" class="xs m">Draws</text>
+  </g>
+  <text x="800" y="590" class="xs">Win +1 · Loss −1 · Draw 0</text>
+  <text x="800" y="610" class="xs">3 wins in a row: +1 bonus, then the streak starts again.</text>
+
+  <text x="240" y="680" class="n">FR-12 / Q3: when the server returns an unfinished game, the Play page shows this banner. "Resume game" (primary) opens 03-game with the saved board.</text>
+  <text x="240" y="700" class="n">"Start new game" becomes secondary. Decided (spec, Decisions 1 / AC-9): it asks for confirmation, then the unfinished game counts as a loss</text>
+  <text x="240" y="720" class="n">(−1, streak 0) and a new game starts. The confirm dialog is not mocked (text-only requirement).</text>
+</svg>

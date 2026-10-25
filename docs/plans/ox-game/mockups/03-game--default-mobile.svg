@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 812" width="375" height="812">
+  <title>03 Game in progress - default (your turn), mobile</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EEF2FF"/>
+      <stop offset="1" stop-color="#F8FAFC"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#1E1B4B" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <style>
+    text{font-family:system-ui,sans-serif;fill:#0F172A}
+    .h2{font-size:20px;font-weight:800}
+    .b{font-size:16px}
+    .s{font-size:14px;fill:#475569}
+    .xs{font-size:12px;fill:#64748B}
+    .bd{font-weight:700}
+    .sb{font-weight:600}
+    .m{text-anchor:middle}
+    .r{text-anchor:end}
+    .w{fill:#FFFFFF}
+    .a{fill:#4338CA}
+    .n{font-size:11px;fill:#64748B;font-style:italic}
+  </style>
+  <rect x="0" y="0" width="375" height="812" fill="url(#bg)"/>
+
+  <!-- Header (mobile) -->
+  <rect x="0" y="0" width="375" height="100" fill="#FFFFFF"/>
+  <rect x="16" y="14" width="28" height="28" rx="8" fill="url(#brand)"/>
+  <path d="M23 21 L30 28 M30 21 L23 28" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="35" cy="33" r="3.5" fill="none" stroke="#FFFFFF" stroke-width="2.2"/>
+  <text x="52" y="35" style="font-size:18px;font-weight:700">OX Game</text>
+  <circle cx="250" cy="28" r="15" fill="url(#brand)" stroke="#E0E7FF" stroke-width="3"/>
+  <text x="250" y="32" class="xs m bd w">AM</text>
+  <rect x="275" y="12" width="84" height="32" rx="16" fill="#FFFFFF" stroke="#CBD5E1"/>
+  <text x="317" y="33" class="s m sb" style="fill:#334155">Sign out</text>
+  <line x1="0" y1="56.5" x2="375" y2="56.5" stroke="#F1F5F9"/>
+  <text x="16" y="84" class="s bd a">Play</text>
+  <rect x="16" y="95" width="30" height="4" rx="2" fill="#4F46E5"/>
+  <text x="76" y="84" class="s">Leaderboard</text>
+  <line x1="0" y1="100.5" x2="375" y2="100.5" stroke="#E2E8F0"/>
+
+  <!-- Stats strip -->
+  <rect x="16" y="112" width="343" height="76" rx="16" fill="#FFFFFF" stroke="#E2E8F0" filter="url(#sh)"/>
+  <line x1="130" y1="124" x2="130" y2="176" stroke="#F1F5F9" stroke-width="2"/>
+  <line x1="245" y1="124" x2="245" y2="176" stroke="#F1F5F9" stroke-width="2"/>
+  <text x="73" y="134" class="xs m">Score</text>
+  <text x="73" y="170" class="m" style="font-size:26px;font-weight:800;fill:#4338CA">5</text>
+  <text x="187" y="134" class="xs m">Win streak</text>
+  <circle cx="156" cy="160" r="6" fill="#F59E0B" stroke="#D97706" stroke-width="1.5"/>
+  <circle cx="172" cy="160" r="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <circle cx="188" cy="160" r="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <rect x="198" y="150" width="36" height="20" rx="10" fill="#FFFBEB" stroke="#FCD34D"/>
+  <text x="216" y="165" class="bd m" style="font-size:12px;fill:#92400E">1/3</text>
+  <text x="302" y="134" class="xs m">W / L / D</text>
+  <text x="302" y="167" class="m bd" style="font-size:17px"><tspan style="fill:#15803D">7</tspan> / <tspan style="fill:#B91C1C">2</tspan> / <tspan style="fill:#334155">3</tspan></text>
+
+  <!-- Status -->
+  <text x="16" y="222" class="h2">Your turn</text>
+  <text x="16" y="244" class="s">You are <tspan style="fill:#4338CA;font-weight:700">X</tspan> · Bot is <tspan style="fill:#C2410C;font-weight:700">O</tspan></text>
+  <rect x="247" y="206" width="112" height="26" rx="13" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="303" y="223" class="m sb" style="font-size:12px;fill:#9A3412">Difficulty: Hard</text>
+
+  <!-- Board card -->
+  <rect x="21" y="252" width="332" height="332" rx="22" fill="#FFFFFF" stroke="#E2E8F0" filter="url(#sh)"/>
+  <g fill="#F8FAFC" stroke="#E2E8F0" stroke-width="2">
+    <rect x="31" y="262" width="96" height="96" rx="14"/>
+    <rect x="139" y="262" width="96" height="96" rx="14"/>
+    <rect x="247" y="262" width="96" height="96" rx="14"/>
+    <rect x="31" y="370" width="96" height="96" rx="14"/>
+    <rect x="139" y="370" width="96" height="96" rx="14"/>
+    <rect x="247" y="370" width="96" height="96" rx="14"/>
+    <rect x="31" y="478" width="96" height="96" rx="14"/>
+    <rect x="139" y="478" width="96" height="96" rx="14"/>
+    <rect x="247" y="478" width="96" height="96" rx="14"/>
+  </g>
+  <circle cx="79" cy="310" r="27" fill="none" stroke="#EA580C" stroke-width="9"/>
+  <path d="M272 287 L318 333 M318 287 L272 333" stroke="#4F46E5" stroke-width="9" stroke-linecap="round"/>
+  <path d="M164 395 L210 441 M210 395 L164 441" stroke="#4F46E5" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="79" cy="526" r="27" fill="none" stroke="#EA580C" stroke-width="9"/>
+
+  <text x="187" y="610" class="xs m">Tap an empty cell to place X.</text>
+  <text x="187" y="630" class="xs m">Win +1 · Loss −1 · Draw 0 · 3 wins in a row: +1 bonus</text>
+
+  <text x="16" y="680" class="n">Board fills the width (min cell 96px at 375px; still fits at 360px).</text>
+  <text x="16" y="696" class="n">Stats move from the side panel to a strip above the board.</text>
+  <text x="16" y="712" class="n">Bot-thinking and game-over states reuse the desktop rules</text>
+  <text x="16" y="728" class="n">(green frame for your win, red frame for the bot's win).</text>
+  <text x="16" y="744" class="n">Name is hidden in the mobile header; avatar has aria-label.</text>
+</svg>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900">
+  <title>08 Shared header / nav - player and admin, desktop and mobile</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EEF2FF"/>
+      <stop offset="1" stop-color="#F8FAFC"/>
+    </linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#1E1B4B" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <style>
+    text{font-family:system-ui,sans-serif;fill:#0F172A}
+    .h2{font-size:20px;font-weight:700}
+    .b{font-size:16px}
+    .s{font-size:14px;fill:#475569}
+    .xs{font-size:12px;fill:#64748B}
+    .bd{font-weight:700}
+    .sb{font-weight:600}
+    .m{text-anchor:middle}
+    .r{text-anchor:end}
+    .w{fill:#FFFFFF}
+    .a{fill:#4338CA}
+    .n{font-size:12px;fill:#64748B;font-style:italic}
+    .lbl{font-size:13px;font-weight:700;fill:#475569;letter-spacing:0.5px}
+  </style>
+  <rect x="0" y="0" width="1440" height="900" fill="url(#bg)"/>
+
+  <!-- A: Desktop, player -->
+  <text x="40" y="44" class="lbl">A. Desktop · player (Play active)</text>
+  <g transform="translate(0,60)">
+    <rect x="0" y="0" width="1440" height="64" fill="#FFFFFF" filter="url(#sh)"/>
+    <rect x="40" y="16" width="32" height="32" rx="9" fill="url(#brand)"/>
+    <path d="M48 24 L56 32 M56 24 L48 32" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="61" cy="39" r="4" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+    <text x="82" y="39" class="h2">OX Game</text>
+    <rect x="186" y="16" width="62" height="32" rx="16" fill="#EEF2FF"/>
+    <text x="217" y="37" class="b bd m a">Play</text>
+    <rect x="199" y="58" width="36" height="4" rx="2" fill="#4F46E5"/>
+    <text x="314" y="37" class="b m" style="fill:#475569">Leaderboard</text>
+    <circle cx="1196" cy="32" r="17" fill="url(#brand)" stroke="#E0E7FF" stroke-width="3"/>
+    <text x="1196" y="36" class="xs m bd w">AM</text>
+    <text x="1222" y="37" class="sb" style="font-size:14px">Alex Morgan</text>
+    <rect x="1330" y="16" width="90" height="32" rx="16" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="1375" y="37" class="s m sb" style="fill:#334155">Sign out</text>
+  </g>
+
+  <!-- B: Desktop, admin -->
+  <text x="40" y="184" class="lbl">B. Desktop · admin (Admin active)</text>
+  <g transform="translate(0,200)">
+    <rect x="0" y="0" width="1440" height="64" fill="#FFFFFF" filter="url(#sh)"/>
+    <rect x="40" y="16" width="32" height="32" rx="9" fill="url(#brand)"/>
+    <path d="M48 24 L56 32 M56 24 L48 32" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="61" cy="39" r="4" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+    <text x="82" y="39" class="h2">OX Game</text>
+    <!-- Hover state on Leaderboard -->
+    <rect x="258" y="16" width="112" height="32" rx="16" fill="#F1F5F9"/>
+    <text x="314" y="37" class="b m">Leaderboard</text>
+    <text x="314" y="80" class="xs m">hover</text>
+    <rect x="388" y="16" width="64" height="32" rx="16" fill="#EEF2FF"/>
+    <text x="420" y="37" class="b bd m a">Admin</text>
+    <rect x="395" y="58" width="50" height="4" rx="2" fill="#4F46E5"/>
+    <circle cx="1196" cy="32" r="17" fill="url(#brand)" stroke="#E0E7FF" stroke-width="3"/>
+    <text x="1196" y="36" class="xs m bd w">AO</text>
+    <text x="1222" y="37" class="sb" style="font-size:14px">Admin OX</text>
+    <rect x="1330" y="16" width="90" height="32" rx="16" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="1375" y="37" class="s m sb" style="fill:#334155">Sign out</text>
+  </g>
+
+  <!-- C: Mobile, player -->
+  <text x="40" y="324" class="lbl">C. Mobile · player (Leaderboard active)</text>
+  <g transform="translate(40,340)">
+    <rect x="0" y="0" width="375" height="100" rx="12" fill="#FFFFFF" stroke="#E2E8F0" filter="url(#sh)"/>
+    <rect x="16" y="14" width="28" height="28" rx="8" fill="url(#brand)"/>
+    <path d="M23 21 L30 28 M30 21 L23 28" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="35" cy="33" r="3.5" fill="none" stroke="#FFFFFF" stroke-width="2.2"/>
+    <text x="52" y="35" style="font-size:18px;font-weight:700">OX Game</text>
+    <circle cx="250" cy="28" r="15" fill="url(#brand)" stroke="#E0E7FF" stroke-width="3"/>
+    <text x="250" y="32" class="xs m bd w">AM</text>
+    <rect x="275" y="12" width="84" height="32" rx="16" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="317" y="33" class="s m sb" style="fill:#334155">Sign out</text>
+    <line x1="0" y1="56.5" x2="375" y2="56.5" stroke="#F1F5F9"/>
+    <text x="16" y="84" class="s">Play</text>
+    <text x="76" y="84" class="s bd a">Leaderboard</text>
+    <rect x="76" y="95" width="86" height="4" rx="2" fill="#4F46E5"/>
+  </g>
+
+  <!-- D: Mobile, admin -->
+  <text x="480" y="324" class="lbl">D. Mobile · admin (Admin active)</text>
+  <g transform="translate(480,340)">
+    <rect x="0" y="0" width="375" height="100" rx="12" fill="#FFFFFF" stroke="#E2E8F0" filter="url(#sh)"/>
+    <rect x="16" y="14" width="28" height="28" rx="8" fill="url(#brand)"/>
+    <path d="M23 21 L30 28 M30 21 L23 28" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="35" cy="33" r="3.5" fill="none" stroke="#FFFFFF" stroke-width="2.2"/>
+    <text x="52" y="35" style="font-size:18px;font-weight:700">OX Game</text>
+    <circle cx="250" cy="28" r="15" fill="url(#brand)" stroke="#E0E7FF" stroke-width="3"/>
+    <text x="250" y="32" class="xs m bd w">AO</text>
+    <rect x="275" y="12" width="84" height="32" rx="16" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="317" y="33" class="s m sb" style="fill:#334155">Sign out</text>
+    <line x1="0" y1="56.5" x2="375" y2="56.5" stroke="#F1F5F9"/>
+    <text x="16" y="84" class="s">Leaderboard</text>
+    <text x="116" y="84" class="s bd a">Admin</text>
+    <rect x="116" y="95" width="44" height="4" rx="2" fill="#4F46E5"/>
+  </g>
+
+  <!-- E: Signed out -->
+  <text x="920" y="324" class="lbl">E. Signed out</text>
+  <rect x="920" y="340" width="480" height="100" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-dasharray="6 4"/>
+  <text x="944" y="384" class="s">No header. Only 01-login is shown (FR-1).</text>
+  <text x="944" y="408" class="xs">Nav links, avatar and Sign out never render while signed out.</text>
+
+  <!-- Notes -->
+  <text x="40" y="500" class="lbl">Behaviour</text>
+  <text x="40" y="530" class="s">• Links: Play, Leaderboard, and Admin (only when the server says the user is admin; FR-10).</text>
+  <text x="40" y="556" class="s">• Active link: indigo pill + bold indigo text + 4px underline + aria-current="page" (not colour alone). Hover: slate-100 pill.</text>
+  <text x="40" y="582" class="s">• Avatar: Google profile photo; initials on the indigo→violet gradient circle as fallback. Desktop shows the display name next to it.</text>
+  <text x="40" y="608" class="s">• Mobile (&lt; 768px): name hidden, avatar keeps aria-label with the name; links move to a second row of tabs.</text>
+  <text x="40" y="634" class="s">• Long names are truncated with an ellipsis (full name in title attribute).</text>
+  <text x="40" y="660" class="s">• Sign out: signs out of Firebase and returns to 01-login (FR-2). No confirm dialog.</text>
+  <text x="40" y="686" class="s">• Header is a &lt;header&gt; with &lt;nav aria-label="Main"&gt;. Tab order: logo → links → Sign out.</text>
+  <text x="40" y="712" class="s">• Logo "OX Game" links to Play.</text>
+
+  <!-- F: Shared controls (reference for all screens) -->
+  <text x="40" y="760" class="lbl">F. Shared controls</text>
+  <rect x="40" y="776" width="140" height="44" rx="12" fill="#4F46E5" filter="url(#sh)"/>
+  <text x="110" y="803" class="b bd m w">Play again</text>
+  <text x="110" y="840" class="xs m">primary</text>
+  <rect x="196" y="776" width="140" height="44" rx="12" fill="#4338CA" filter="url(#sh)"/>
+  <text x="266" y="803" class="b bd m w">Play again</text>
+  <text x="266" y="840" class="xs m">primary · hover</text>
+  <rect x="352" y="776" width="140" height="44" rx="12" fill="#E2E8F0"/>
+  <text x="422" y="803" class="b bd m" style="fill:#64748B">Play again</text>
+  <text x="422" y="840" class="xs m">primary · disabled</text>
+  <rect x="508" y="776" width="160" height="44" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="588" y="803" class="s m bd" style="fill:#1E293B">Change difficulty</text>
+  <text x="588" y="840" class="xs m">secondary</text>
+  <rect x="684" y="776" width="160" height="44" rx="12" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5"/>
+  <text x="764" y="803" class="s m bd" style="fill:#1E293B">Change difficulty</text>
+  <text x="764" y="840" class="xs m">secondary · hover</text>
+  <rect x="860" y="776" width="160" height="44" rx="12" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.5"/>
+  <rect x="855" y="771" width="170" height="54" rx="16" fill="none" stroke="#4F46E5" stroke-width="2.5" stroke-dasharray="5 3"/>
+  <text x="940" y="803" class="s m bd" style="fill:#1E293B">Change difficulty</text>
+  <text x="940" y="840" class="xs m">focus-visible</text>
+  <rect x="1048" y="786" width="140" height="28" rx="14" fill="#FFF7ED" stroke="#FDBA74"/>
+  <text x="1118" y="805" class="m sb" style="font-size:13px;fill:#9A3412">Difficulty: Hard</text>
+  <rect x="1200" y="786" width="140" height="28" rx="14" fill="#ECFDF5" stroke="#6EE7B7"/>
+  <text x="1270" y="805" class="m sb" style="font-size:13px;fill:#047857">Difficulty: Easy</text>
+  <text x="1194" y="840" class="xs m">difficulty pills</text>
+</svg>
