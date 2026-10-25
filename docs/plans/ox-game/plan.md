@@ -137,7 +137,7 @@ Lead-owned tasks involve approval-required actions (dependencies, config). Paral
 | T12 | Test cases from AC/UI-*; P1 → E2E | qa-engineer | `docs/plans/ox-game/test-cases.md` | – | Gate B | all | done |
 | T13 | Approve + install Playwright, config | lead | `package.json`, `playwright.config.ts` | – | T12 | – | done (approved by approver) |
 | T14 | E2E specs (login guard, play/win/loss/draw, streak bonus, resume, leaderboard, admin 403) with mocked API | qa-engineer | `e2e/*.spec.ts` | – | T8-T10, T13 | P1 cases | todo |
-| T15 | README (ภาษาไทย) + `.env.example` final | lead | `README.md`, `.env.example` | – | T4,T10 | AC-24 | todo |
+| T15 | README (ภาษาไทย) + `.env.example` final | lead | `README.md`, `.env.example` | – | T4,T10 | AC-24 | done |
 | T16 | QA verify (run E2E + all cases, exploratory, compare mockups) | qa-engineer | test-case results only | – | T11,T14 | all | todo |
 | T17 | Code review (diff vs plan + mockups) and fix loop | code-reviewer | – | – | T16 | – | todo |
 | D2 | Mockups for admin login: default, loading, error, mobile | ux-ui-designer | `docs/plans/ox-game/mockups/09-login-admin--*.svg`, `mockups/index.md` | – | Gate B | UI-10 | todo |
