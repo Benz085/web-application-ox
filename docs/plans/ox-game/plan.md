@@ -130,18 +130,18 @@ Lead-owned tasks involve approval-required actions (dependencies, config). Paral
 | T5 | Tests for server + handlers with fake Firestore and fake auth (401, 403, validation, idempotency, resume, leaderboard no email) | test-be-engineer | `server/__tests__/*`, `api/__tests__/*` | – | T3,T4 | AC-4,6,7,9,16,18-20 | todo |
 | T6 | `firestore.rules` (deny all) | backend-developer | `firestore.rules` | – | T0 | AC-21 | done (rules not validated, needs Firebase CLI) |
 | T7 | FE foundation: firebase client, AuthContext, guards, e2e fake auth, api client, router, Layout/Header, global styles | frontend-developer | `src/main.tsx`, `src/App.tsx`, `src/routes.tsx`, `src/auth/*`, `src/api/*`, `src/components/Layout*`, `src/components/Header*`, `src/styles/*` | – | T0, mockups | AC-1,3,22 | done (not viewed in browser) |
-| T8 | Login page (loading + error states) | frontend-developer | `src/features/login/*` | – | T7 | AC-1,2 | todo |
+| T8 | Login page (loading + error states) | frontend-developer | `src/features/login/*` | – | T7 | AC-1,2 | done |
 | T9 | Game page: setup, board, bot-thinking, result variants, resume/abandon, score panel | frontend-developer | `src/features/game/*`, `src/components/Board*` | – | T7, T4 contract | AC-5-9,12-17,23 | todo |
-| T10 | Leaderboard + Admin pages (+ not-authorized, empty, loading/error states) | frontend-developer | `src/features/leaderboard/*`, `src/features/admin/*` | – | T7 | AC-18-20,22 | todo |
+| T10 | Leaderboard + Admin pages (+ not-authorized, empty, loading/error states) | frontend-developer | `src/features/leaderboard/*`, `src/features/admin/*` | – | T7 | AC-18-20,22 | done |
 | T11 | FE tests: auth guards, api client, Board a11y, game page flows, leaderboard/admin | test-fe-engineer | `src/**/__tests__/*` | skill-fe-unit-test (partial) | T8-T10 | AC-1,3,17,18-20,23 | todo |
-| T12 | Test cases from AC/UI-*; P1 → E2E | qa-engineer | `docs/plans/ox-game/test-cases.md` | – | Gate B | all | todo |
+| T12 | Test cases from AC/UI-*; P1 → E2E | qa-engineer | `docs/plans/ox-game/test-cases.md` | – | Gate B | all | done |
 | T13 | Approve + install Playwright, config | lead | `package.json`, `playwright.config.ts` | – | T12 | – | todo |
 | T14 | E2E specs (login guard, play/win/loss/draw, streak bonus, resume, leaderboard, admin 403) with mocked API | qa-engineer | `e2e/*.spec.ts` | – | T8-T10, T13 | P1 cases | todo |
 | T15 | README (ภาษาไทย) + `.env.example` final | lead | `README.md`, `.env.example` | – | T4,T10 | AC-24 | todo |
 | T16 | QA verify (run E2E + all cases, exploratory, compare mockups) | qa-engineer | test-case results only | – | T11,T14 | all | todo |
 | T17 | Code review (diff vs plan + mockups) and fix loop | code-reviewer | – | – | T16 | – | todo |
 | D2 | Mockups for admin login: default, loading, error, mobile | ux-ui-designer | `docs/plans/ox-game/mockups/09-login-admin--*.svg`, `mockups/index.md` | – | Gate B | UI-10 | todo |
-| T18 | Admin login page `/login/admin` + route, redirects, header variant for admin, e2e fake admin | frontend-developer | `src/features/login-admin/*` (T7 files touched only for routes/header/guards, run after T7) | – | T7, D2 | AC-1,25-29 | todo |
+| T18 | Admin login page `/login/admin` + route, redirects, header variant for admin, e2e fake admin | frontend-developer | `src/features/login-admin/*` (T7 files touched only for routes/header/guards, run after T7) | – | T7, D2 | AC-1,25-29 | done |
 | T19 | Server: `isAdmin` by fixed `ADMIN_EMAIL` + password provider, `/api/me` without profile for admin, `ADMIN_ACCOUNT` 403 on game endpoints, admin excluded from lists (extends T3/T4) | backend-developer | `server/auth.ts`, `server/userRepo.ts`, `api/me.ts`, `api/game/*.ts` | – | T3,T4 | AC-20,27,28 | todo |
 | T20 | Tests for admin login flow (client: success, wrong creds, non-admin signs out; server: uid allowlist, 403, `/api/me` admin) | test-fe-engineer, test-be-engineer | `src/features/login-admin/__tests__/*`, `server/__tests__/auth.admin.test.ts` | skill-fe-unit-test (partial) | T18,T19 | AC-25-29 | todo |
 
