@@ -334,3 +334,66 @@ Notes on partial coverage (asserted by role/label/text only, not pixel/visual co
 - TC-79 / TC-113: the app decides from `isAdmin` in `/api/me`, so a player never calls `/api/admin/players` (asserted: 0 requests). The 403 is mocked as well.
 - TC-104: sign-in triggers `/api/me` twice (sign-in check plus auth provider); the spec asserts no extra request after a forced second click.
 - Known failing: TC-51 (stats panel) is red because of an app defect (negative score rendered with ASCII "-" instead of "−"; see QA report).
+
+---
+
+## QA verify results (Phase 5.2, qa-engineer)
+
+**Verdict: PASS WITH NOTES** (no Blocker/Major; Minor visual gaps vs mockups; manual-UAT cases still need the approver).
+
+Environment: Chromium (Playwright), `VITE_E2E=true`, only `/api/*` mocked. Note: the working tree had uncommitted changes by someone else while this ran (`src/auth/AuthContext.tsx`, `server/auth.ts`, `package.json`, ...); results are for the tree as it was during the run.
+
+### Real run
+
+| Command | Result |
+|---|---|
+| `npx playwright test` | 73 passed, 0 failed, 0 skipped (51 s). TC-51 (stats panel minus sign) is now green; the "Known failing" note above is stale. |
+
+### P2 cases / regression checked in a real browser (scratch scripts, not in repo)
+
+| TC | Result | Evidence |
+|---|---|---|
+| TC-15 (API 401 on `/api/me`) | pass, behaviour noted | Page stays in the shell and shows "Could not load your account / <raw server message> / Try again / Sign out". It does not redirect to `/login`, and the raw server message is shown. |
+| TC-43 (back/forward) | pass | Resume banner after reload; Resume restores X/O; Leaderboard then Back shows the setup/resume banner again with server state, no duplicated marks. |
+| TC-53 (win lines) | partial | Diagonal, row and column drawn correctly for player and bot (green/red, strike line, text "right column"/"middle row"/"diagonal"). The other 5 lines not rendered. |
+| TC-92 (keyboard / focus) | pass | Arrows move focus, edges do not wrap, Enter plays, focus ring is dashed indigo, Tab enters the board once and leaves it. |
+| TC-26 (double click) | pass | `dblclick` while the bot is thinking sent 1 move; cells are `aria-disabled="true"` (not `disabled`). |
+| TC-41 / TC-42 (500 on start / move) | pass | Alert "Couldn't reach the server. Try again."; board unchanged; controls usable. The alert pushes the board down about 65 px (layout shift). |
+| TC-11 / sign out and back in | pass | Sign out -> `/login`; `/` -> `/login`; Google sign-in (fake) -> `/`. |
+| TC-99, TC-100, TC-102, TC-103 (admin login) | pass | Show toggles type; Enter submits; success -> `/admin`; sign out -> `/login/admin`; wrong account -> "Invalid email or password.", email kept, focus in password. |
+| TC-112 | pass | Admin on `/`, `/login`, `/login/admin` ends on `/admin`; `/leaderboard` stays on the leaderboard. |
+| TC-113 / player routes | pass | Player on `/admin` sees "Not authorized" and makes 0 `/api/admin/*` calls; player on `/login/admin` sees the admin login form (not redirected; spec only requires redirecting admins); player on `/login` goes to `/`. |
+| TC-90 (360 px) | pass | `scrollWidth - clientWidth = 0` on login, admin login, setup, game, leaderboard, admin (cards), forbidden, game over. |
+| TC-115 | pass | Admin login: slate background, no X/O, shield, ADMIN badge. |
+| Regression (auth/router/header, API errors, layout) | pass | Covered by the 73 E2E plus the checks above. |
+
+Not run (need unit tooling or real services): all `unit` cases (TC-9, 13, 27, 28, 30, 35-37, 46, 59, 60, 66, 68, 83, 84, 88, 106, 110) are owned by test-be/test-fe and were not part of this task. TC-23 (grayscale) and TC-97 (Safari/Firefox/Edge) not run: only Chromium available.
+
+### Bugs
+
+| # | Sev | Where | Steps | Expected | Actual | Screenshot |
+|---|---|---|---|---|---|---|
+| B1 | Minor | Leaderboard at 360 px | Open `/leaderboard`, 360 px, player "Alex Morgan" is You | Name stays readable on one line or wraps at a word | Name breaks inside the word ("Morga" / "n") because the You tag and 3 stat columns squeeze the name | `.../scratchpad/qa/lb-m.png` |
+| B2 | Minor | Game over (all variants) | Finish any game | Result card has an icon (trophy / robot / "=" / star) and a "+1 / -1 / 0" pill, sits beside the board on desktop (`04-gameover--*.svg`) | No icon, points are plain big text, card is below the board on desktop so Play again may be below the fold; on 360/375 px the buttons need a scroll | `go-win.png`, `go-win-m.png`, `go-loss2.png` |
+| B3 | Minor | Setup / stats / game | Open `/` | Per mockups: radio indicators, Easy/Hard icon pill, Wins green tile, Losses red tile, amber streak dots/pill, "Difficulty: X" pill, compact stats bar on mobile | Plain indigo dots, grey tiles, no radios, difficulty only in sub-text, full stats card below the board on mobile | `setup.png`, `game.png`, `game-m.png` |
+| B4 | Nit | Login pages | Open `/login` | Decorative X/O shapes in the background; eye icon next to Show; "!" icon in the error alert | None of these three | `login.png`, `adminlogin.png`, `x-adminlogin-err.png` |
+| B5 | Nit | Unknown URL | Open `/nonexistent` (any user) | Redirect or a not-found message | Empty page (no catch-all route) | - |
+| B6 | Nit | Resume confirm | Click Start new game | Danger-style confirm button (mockup proposal 2) | Primary indigo "Yes, start new game" (text and Cancel are correct) | `resume-confirm.png` |
+
+Visually matching the mockups: login, admin login (default, error), leaderboard (medals, You row with bar, minus sign in red, empty), admin table (sort indicator, "Visible to admins only", dash for no games) and mobile cards with sort select, forbidden state, winning cells and strike line (green/red, no overflow, stylesheet loaded), "You lose" headline, draw without highlight, 3 equal board rows.
+
+### Manual UAT for the approver (real Google / Firebase / Firestore)
+
+1. TC-7: open `/login`, Sign in with Google with an account never used. Expect the game page; in Firestore console `users/{uid}` exists with score 0, streak 0, wins/losses/draws 0.
+2. TC-8: Sign out, sign in again with the same account after playing one game. Score, streak, stats unchanged.
+3. TC-12: signed in with Google, refresh, then close the tab and reopen the site. Still signed in; Sign out returns to `/login`.
+4. TC-107: create `adminox@gmail.com` (Email/Password) in Firebase console. Open `/login/admin`, sign in, refresh, sign out. Lands on `/admin`, refresh keeps the session, sign out returns to `/login/admin`.
+5. TC-108: on `/login/admin` try a wrong password, an unknown email, and a valid second email/password account that is not admin. All three show exactly "Invalid email or password."; the third is signed out.
+6. TC-109: fail the admin login many times. Expect "Too many attempts. Try again later." if implemented, otherwise record a note.
+7. TC-111 / TC-85: after step 4 check Firestore has no `users/{adminUid}`; `/admin` lists real emails/scores/streak/W/L/D/last played; a non-admin Google player on `/admin` gets "Not authorized"; admin is absent from `/leaderboard`.
+8. TC-38 / TC-39: set `config/bot.hardMistakeRate` to 0 then 1 (and delete the doc), play Hard games. 0: bot never loses; 1: random-looking moves; missing doc: default 0.2.
+9. TC-40 / TC-44: start a game, make 2 moves, close the tab, return from another browser: resume banner with same board. Revoke/expire the session mid-game and click a cell: app recovers or shows an error, score unchanged.
+10. TC-61 / TC-62 / TC-89: replay the final-move request twice (devtools or curl): score changes once. In the browser console with the Firebase client SDK, write `users/{uid}.score` and read `config/bot`: `permission-denied`.
+11. TC-14: `curl` `/api/me`, `/api/leaderboard`, `/api/admin/players` on the deployed app (or `vercel dev`) with no token and with `Bearer abc`: 401 JSON each.
+12. TC-86: two Google accounts each finish a game; `/leaderboard` lists both in the right order without email.
+13. TC-93, TC-94, TC-95, TC-96, TC-97: README review, secret grep, `npm run build` then grep `dist` for `e2eAuth`/`e2eUser`, p95 move time under 1 s, browser matrix.
