@@ -240,3 +240,97 @@ All 29 AC and 10 UI criteria have at least one case.
 ## Counts
 
 Total 116 cases: P1 = 70 (all E2E) · P2 = 46 (manual-UAT 27, unit 18, E2E-exploratory 1).
+
+---
+
+## E2E automation map (Playwright, T14)
+
+Specs live in `e2e/*.spec.ts`; mock API and helpers in `e2e/helpers/` (`mockApi.ts` stateful `/api/*` mock, `auth.ts` test-only patches of `e2eAuth.ts`, `ui.ts`, `fixtures.ts`). Test titles start with the TC id. Run: `npx playwright test`.
+
+P1 cases: 70, automated: 70, not automated: 0.
+
+| TC | Spec file | Test title (after TC id) |
+|---|---|---|
+| TC-1 | `e2e/login-guard.spec.ts` | logged out / redirects to /login |
+| TC-2 | `e2e/login-guard.spec.ts` | logged out /leaderboard redirects to /login |
+| TC-3 | `e2e/login-guard.spec.ts` | logged out /admin redirects to /login/admin |
+| TC-4 | `e2e/login-guard.spec.ts` | login default state has Google only and no admin entry point |
+| TC-5 | `e2e/login-guard.spec.ts` | login loading state blocks a second sign-in |
+| TC-6 | `e2e/login-guard.spec.ts` | login error state shows alert and allows retry |
+| TC-10 | `e2e/login-guard.spec.ts` | session survives refresh |
+| TC-11 | `e2e/login-guard.spec.ts` | sign out returns to login and / is guarded again |
+| TC-16 | `e2e/login-guard.spec.ts` | signed-out header variant shows no app navigation |
+| TC-17 | `e2e/game-play.spec.ts` | setup default state for a new player |
+| TC-18 | `e2e/game-play.spec.ts` | setup preselects the last played difficulty |
+| TC-19 | `e2e/game-play.spec.ts` | setup loading state disables the controls |
+| TC-20 | `e2e/game-play.spec.ts` | start creates an empty board and the player moves first |
+| TC-21 | `e2e/game-play.spec.ts` | board cells are labelled buttons |
+| TC-22 | `e2e/game-play.spec.ts` | keyboard play with arrows, Enter and Space |
+| TC-24 | `e2e/game-play.spec.ts` | move gets one bot reply and the board is locked while thinking |
+| TC-25 | `e2e/game-play.spec.ts` | status text is an aria-live polite region |
+| TC-26 | `e2e/game-play.spec.ts` | double click sends one move and a click while locked is ignored |
+| TC-29 | `e2e/game-play.spec.ts` | UI recovers when the server rejects a move |
+| TC-31 | `e2e/game-resume.spec.ts` | resume banner after reload |
+| TC-32 | `e2e/game-resume.spec.ts` | resume restores the board and difficulty |
+| TC-33 | `e2e/game-resume.spec.ts` | start new game asks for confirmation and Cancel keeps the game |
+| TC-34 | `e2e/game-resume.spec.ts` | confirm abandons the game as a loss and starts a new one |
+| TC-41 | `e2e/game-play.spec.ts` | start failure shows an alert and re-enables the controls |
+| TC-42 | `e2e/game-play.spec.ts` | network error during a move keeps the board and allows a retry |
+| TC-45 | `e2e/game-play.spec.ts` | admin cannot play: redirected to /admin without a Play link |
+| TC-47 | `e2e/game-scoring.spec.ts` | win +1 on a diagonal |
+| TC-48 | `e2e/game-scoring.spec.ts` | third win in a row gives +2 and resets the streak |
+| TC-49 | `e2e/game-scoring.spec.ts` | streak restarts after the bonus |
+| TC-50 | `e2e/game-scoring.spec.ts` | loss -1 shows "You lose" with the bot line |
+| TC-51 | `e2e/game-scoring.spec.ts` | score goes negative and is shown with a minus sign (stats panel); score goes negative and is shown with a minus sign (leaderboard row) |
+| TC-52 | `e2e/game-scoring.spec.ts` | draw gives 0 points and resets the streak |
+| TC-54 | `e2e/game-scoring.spec.ts` | result is not conveyed by colour only |
+| TC-55 | `e2e/game-scoring.spec.ts` | Play again keeps the difficulty and skips Setup |
+| TC-56 | `e2e/game-scoring.spec.ts` | Change difficulty goes to Setup with updated stats |
+| TC-57 | `e2e/game-scoring.spec.ts` | game over mobile layout has no horizontal scroll |
+| TC-58 | `e2e/game-scoring.spec.ts` | stats update after each finished game (win, loss, draw) |
+| TC-63 | `e2e/game-scoring.spec.ts` | streak text and hint for 0, 1 and 2 wins in a row |
+| TC-64 | `e2e/leaderboard.spec.ts` | default: rows sorted with rank, name, score and W/L/D |
+| TC-65 | `e2e/leaderboard.spec.ts` | leaderboard never shows an email |
+| TC-67 | `e2e/leaderboard.spec.ts` | tied players are ranked sequentially in server order |
+| TC-69 | `e2e/leaderboard.spec.ts` | current user row is marked with a You tag |
+| TC-70 | `e2e/leaderboard.spec.ts` | empty state |
+| TC-71 | `e2e/leaderboard.spec.ts` | leaderboard mobile has no horizontal scroll |
+| TC-72 | `e2e/leaderboard.spec.ts` | loading then error state |
+| TC-73 | `e2e/header.spec.ts` | player header: Play, Leaderboard, Sign out, name and initials; player header falls back to the email prefix without a display name |
+| TC-74 | `e2e/header.spec.ts` | header on mobile keeps every link reachable |
+| TC-75 | `e2e/admin-page.spec.ts` | admin table lists all players, sorted by score by default |
+| TC-76 | `e2e/admin-page.spec.ts` | sortable headers reorder rows and expose aria-sort |
+| TC-77 | `e2e/admin-page.spec.ts` | last played is shown in the viewer time zone (Bangkok, UTC+7); last played is shown in the viewer time zone (New York, UTC-5) |
+| TC-78 | `e2e/admin-page.spec.ts` | admin mobile shows cards with a sort select |
+| TC-79 | `e2e/admin-page.spec.ts` | non-admin sees the not-authorized state and no player data |
+| TC-80 | `e2e/admin-page.spec.ts` | non-admin has no Admin nav link on any page |
+| TC-81 | `e2e/header.spec.ts` | admin header: Leaderboard, Admin, Sign out, name Admin OX |
+| TC-82 | `e2e/leaderboard.spec.ts` | admin can open the leaderboard without emails or an admin row |
+| TC-87 | `e2e/admin-page.spec.ts` | admin list loading then error state |
+| TC-90 | `e2e/responsive-360.spec.ts` | no horizontal scroll at 360px on every page |
+| TC-91 | `e2e/game-play.spec.ts` | Tab enters the board once and leaves it |
+| TC-98 | `e2e/admin-login.spec.ts` | default state: email/password only, no other entry points |
+| TC-99 | `e2e/admin-login.spec.ts` | show / hide password toggles input type and does not submit |
+| TC-100 | `e2e/admin-login.spec.ts` | admin login success lands on /admin table |
+| TC-101 | `e2e/admin-login.spec.ts` | admin stays signed in after refresh |
+| TC-102 | `e2e/admin-login.spec.ts` | admin sign out returns to /login/admin |
+| TC-103 | `e2e/admin-login.spec.ts` | wrong password and unknown email give the same generic alert |
+| TC-104 | `e2e/admin-login.spec.ts` | loading state disables the button and sends one sign-in |
+| TC-105 | `e2e/admin-login.spec.ts` | valid non-admin account is rejected with the same message |
+| TC-112 | `e2e/admin-login.spec.ts` | signed-in admin is redirected from / and /login/admin to /admin |
+| TC-113 | `e2e/admin-login.spec.ts` | player cannot bypass through admin routes |
+| TC-114 | `e2e/admin-login.spec.ts` | admin login mobile 360px fits without horizontal scroll |
+| TC-116 | `e2e/login-guard.spec.ts` | /login has no admin form or link |
+
+Notes on partial coverage (asserted by role/label/text only, not pixel/visual comparison with the SVG mockups):
+
+- TC-5, TC-6: the fake `signInWithGoogle` is instant and never fails, so the spec patches the module served by Vite (`helpers/auth.ts`) to delay or reject it. Source files are not changed.
+- TC-103 "wrong password": the fake accepts any non-empty password for `adminox@gmail.com`; the spec patches the fake to reject password `wrong-password`. TC-73 email-prefix fallback uses the same patch (player without display name).
+- TC-17, TC-63: streak dots are `aria-hidden` and have no role; only the `x/3` text and hint are asserted, not filled dots or pill colour.
+- TC-47, TC-50, TC-54: winning-cell highlight is asserted through the cell class (`board__cell--win` / `--loss`); the strike line SVG is `aria-hidden` and not asserted. No icon assertion.
+- TC-69, TC-73: "left bar" and "bold + underline" are visual; asserted through the "You" tag, `aria-current` on the row, and `aria-current="page"` on the nav link.
+- TC-18: the last difficulty is client-side (`localStorage` key `ox:lastDifficulty`), not in the profile.
+- TC-25: located with `[aria-live="polite"]` because the status `<p>` has no role.
+- TC-79 / TC-113: the app decides from `isAdmin` in `/api/me`, so a player never calls `/api/admin/players` (asserted: 0 requests). The 403 is mocked as well.
+- TC-104: sign-in triggers `/api/me` twice (sign-in check plus auth provider); the spec asserts no extra request after a forced second click.
+- Known failing: TC-51 (stats panel) is red because of an app defect (negative score rendered with ASCII "-" instead of "−"; see QA report).
