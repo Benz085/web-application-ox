@@ -1,10 +1,11 @@
 import { fileURLToPath } from 'node:url'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vitest/config'
+import { devApi } from './vite.dev-api.ts'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), devApi()],
   resolve: {
     // Keep in sync with `paths` in tsconfig.app.json.
     alias: { '@/web-app-ox': fileURLToPath(new URL('./src', import.meta.url)) },
