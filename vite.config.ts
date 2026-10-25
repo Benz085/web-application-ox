@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     // Keep in sync with `paths` in tsconfig.app.json.
-    alias: { 'web-app-ox': fileURLToPath(new URL('./src', import.meta.url)) },
+    alias: { '@/web-app-ox': fileURLToPath(new URL('./src', import.meta.url)) },
   },
   test: {
     environment: 'jsdom',
