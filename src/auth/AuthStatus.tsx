@@ -1,4 +1,4 @@
-import { useAuth } from './useAuth'
+import { useAuth } from 'web-app-ox/auth/useAuth'
 
 export function AuthLoading() {
   return (

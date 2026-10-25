@@ -1,4 +1,4 @@
-import type { AuthModule } from './types'
+import type { AuthModule } from 'web-app-ox/auth/types'
 
 let cached: Promise<AuthModule> | undefined
 
@@ -9,7 +9,7 @@ let cached: Promise<AuthModule> | undefined
 export function loadAuth(): Promise<AuthModule> {
   if (!cached) {
     cached =
-      import.meta.env.VITE_E2E === 'true' ? import('./e2eAuth') : import('./firebase')
+      import.meta.env.VITE_E2E === 'true' ? import('web-app-ox/auth/e2eAuth') : import('web-app-ox/auth/firebase')
   }
   return cached
 }

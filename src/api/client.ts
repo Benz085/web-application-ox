@@ -1,5 +1,5 @@
-import { loadAuth } from '../auth/authModule'
-import type { ApiErrorBody } from './types'
+import { loadAuth } from 'web-app-ox/auth/authModule'
+import type { ApiErrorBody } from 'web-app-ox/api/types'
 
 export class ApiError extends Error {
   readonly status: number

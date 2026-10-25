@@ -8,7 +8,7 @@ import {
   signOut,
   type Auth,
 } from 'firebase/auth'
-import type { AuthUser, Unsubscribe } from './types'
+import type { AuthUser, Unsubscribe } from 'web-app-ox/auth/types'
 
 // Lazy init so importing this module never throws when env values are missing.
 function getFirebaseApp(): FirebaseApp {

@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { useAuth } from './useAuth'
-import { AuthError, AuthLoading } from './AuthStatus'
+import { useAuth } from 'web-app-ox/auth/useAuth'
+import { AuthError, AuthLoading } from 'web-app-ox/auth/AuthStatus'
 
 /** Layout-route guard: logged out -> /login; admin at "/" -> /admin. */
 export default function RequireAuth() {

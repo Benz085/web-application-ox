@@ -5,12 +5,12 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { apiGet } from '../api/client'
-import type { MeResponse } from '../api/types'
-import { loadAuth } from './authModule'
-import { getDisplayName, getInitials } from './displayName'
-import { AuthContext, type AuthContextValue } from './authContextValue'
-import type { AuthUser } from './types'
+import { apiGet } from 'web-app-ox/api/client'
+import type { MeResponse } from 'web-app-ox/api/types'
+import { loadAuth } from 'web-app-ox/auth/authModule'
+import { getDisplayName, getInitials } from 'web-app-ox/auth/displayName'
+import { AuthContext, type AuthContextValue } from 'web-app-ox/auth/authContextValue'
+import type { AuthUser } from 'web-app-ox/auth/types'
 
 interface MeState {
   uid: string
