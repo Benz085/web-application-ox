@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -36,5 +39,8 @@
     "typescript": "~6.0.3",
     "vite": "^8.3.4",
     "vitest": "^5.0.5"
+  },
+  "overrides": {
+    "jose": "^5.10.0"
   }
 }
