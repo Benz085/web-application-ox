@@ -138,12 +138,12 @@ Lead-owned tasks involve approval-required actions (dependencies, config). Paral
 | T13 | Approve + install Playwright, config | lead | `package.json`, `playwright.config.ts` | – | T12 | – | done (approved by approver) |
 | T14 | E2E specs (login guard, play/win/loss/draw, streak bonus, resume, leaderboard, admin 403) with mocked API | qa-engineer | `e2e/*.spec.ts` | – | T8-T10, T13 | P1 cases | done |
 | T15 | README (ภาษาไทย) + `.env.example` final | lead | `README.md`, `.env.example` | – | T4,T10 | AC-24 | done |
-| T16 | QA verify (run E2E + all cases, exploratory, compare mockups) | qa-engineer | test-case results only | – | T11,T14 | all | todo |
-| T17 | Code review (diff vs plan + mockups) and fix loop | code-reviewer | – | – | T16 | – | todo |
-| D2 | Mockups for admin login: default, loading, error, mobile | ux-ui-designer | `docs/plans/ox-game/mockups/09-login-admin--*.svg`, `mockups/index.md` | – | Gate B | UI-10 | todo |
+| T16 | QA verify (run E2E + all cases, exploratory, compare mockups) | qa-engineer | test-case results only | – | T11,T14 | all | done |
+| T17 | Code review (diff vs plan + mockups) and fix loop | code-reviewer | – | – | T16 | – | done |
+| D2 | Mockups for admin login: default, loading, error, mobile | ux-ui-designer | `docs/plans/ox-game/mockups/09-login-admin--*.svg`, `mockups/index.md` | – | Gate B | UI-10 | done |
 | T18 | Admin login page `/login/admin` + route, redirects, header variant for admin, e2e fake admin | frontend-developer | `src/features/login-admin/*` (T7 files touched only for routes/header/guards, run after T7) | – | T7, D2 | AC-1,25-29 | done |
-| T19 | Server: `isAdmin` by fixed `ADMIN_EMAIL` + password provider, `/api/me` without profile for admin, `ADMIN_ACCOUNT` 403 on game endpoints, admin excluded from lists (extends T3/T4) | backend-developer | `server/auth.ts`, `server/userRepo.ts`, `api/me.ts`, `api/game/*.ts` | – | T3,T4 | AC-20,27,28 | todo |
-| T20 | Tests for admin login flow (client: success, wrong creds, non-admin signs out; server: uid allowlist, 403, `/api/me` admin) | test-fe-engineer, test-be-engineer | `src/features/login-admin/__tests__/*`, `server/__tests__/auth.admin.test.ts` | skill-fe-unit-test (partial) | T18,T19 | AC-25-29 | todo |
+| T19 | Server: `isAdmin` by fixed `ADMIN_EMAIL` + password provider, `/api/me` without profile for admin, `ADMIN_ACCOUNT` 403 on game endpoints, admin excluded from lists (extends T3/T4) | backend-developer | `server/auth.ts`, `server/userRepo.ts`, `api/me.ts`, `api/game/*.ts` | – | T3,T4 | AC-20,27,28 | done |
+| T20 | Tests for admin login flow (client: success, wrong creds, non-admin signs out; server: uid allowlist, 403, `/api/me` admin) | test-fe-engineer, test-be-engineer | `src/features/login-admin/__tests__/*`, `server/__tests__/auth.admin.test.ts` | skill-fe-unit-test (partial) | T18,T19 | AC-25-29 | done |
 
 Parallel groups: {T1, T7} → {T2, T3, T8, T10} → {T4, T9, T6} → {T5, T11}.
 

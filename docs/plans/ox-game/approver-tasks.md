@@ -19,19 +19,19 @@
 
 ## B. ตั้งค่า Firebase console (ก่อนทดสอบจริง; ทำขนานกับ Phase 4 ได้)
 
-- [ ] **Authentication → Sign-in method:** เปิด **Google** และ **Email/Password** (ยืนยันว่า Email/Password เปิดอยู่จริง)
+- [x] **Authentication → Sign-in method:** เปิด **Google** และ **Email/Password** (ยืนยันว่า Email/Password เปิดอยู่จริง)
 - [ ] **Authentication → Settings → User actions:** ปิด "Enable create (sign-up)" ถ้ามีตัวเลือกนี้ (กันคนสมัครบัญชี Email/Password เอง)
 - [ ] **Authentication → Settings → Authorized domains:** เพิ่มโดเมน Vercel ของโปรเจกต์ (`localhost` มีให้แล้ว) — ทำหลังรู้โดเมน
-- [ ] **Firestore Database:** สร้างฐานข้อมูล (production mode; rules ทีมจะเขียนเป็น deny-all แล้วคุณ deploy เอง)
-- [ ] **Project settings → General → Your apps:** เพิ่ม Web app แล้วคัดลอกค่า config (apiKey, authDomain, projectId, appId) สำหรับ `VITE_FIREBASE_*`
-- [ ] **Project settings → Service accounts:** Generate new private key แล้วเก็บไฟล์ไว้เอง (**ห้าม commit, ห้ามส่งให้ทีม AI**) ใช้ค่า `project_id`, `client_email`, `private_key` เป็น `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY`
+- [x] **Firestore Database:** สร้างฐานข้อมูล (production mode; rules ทีมจะเขียนเป็น deny-all แล้วคุณ deploy เอง)
+- [x] **Project settings → General → Your apps:** เพิ่ม Web app แล้วคัดลอกค่า config (apiKey, authDomain, projectId, appId) สำหรับ `VITE_FIREBASE_*`
+- [x] **Project settings → Service accounts:** Generate new private key แล้วเก็บไฟล์ไว้เอง (**ห้าม commit, ห้ามส่งให้ทีม AI**) ใช้ค่า `project_id`, `client_email`, `private_key` เป็น `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY`
 - [ ] (ไม่บังคับ) สร้าง doc `config/bot` ใน Firestore ด้วย field `hardMistakeRate` (number 0–1) ถ้าอยากปรับความยากบอทระดับยาก; ไม่สร้างก็ใช้ 0.2
 - [ ] Deploy Firestore rules (`firestore.rules` แบบ deny-all) หลังทีมเขียนเสร็จ (T6)
 
 ## C. ระหว่าง Phase 4 (ทีมจะหยุดถามคุณ)
 
-- [ ] อนุมัติ T0: สร้าง initial commit บน `main` แล้วแตก `development` (ตาม Q1) และติดตั้ง dependency ตามแผน
-- [ ] อนุมัติ T13: ติดตั้ง Playwright (`@playwright/test`) และ `playwright.config.ts`
+- [x] อนุมัติ T0: สร้าง initial commit บน `main` แล้วแตก `development` (ตาม Q1) และติดตั้ง dependency ตามแผน
+- [x] อนุมัติ T13: ติดตั้ง Playwright (`@playwright/test`) และ `playwright.config.ts`
 - [ ] ถ้า token ใช้ถึง ~80% ของ budget (ตอนนี้ไม่ได้ตั้ง budget) ตัดสินใจว่าไปต่อหรือไม่
 
 ## D. Gate C (ก่อน push / เปิด PR)
@@ -44,10 +44,10 @@
 
 ทดสอบกับ Firebase จริงหลังใส่ env แล้ว (`vercel dev` หรือ deploy จริง)
 
-- [ ] Google login ด้วยบัญชีผู้เล่น: เข้าเกมได้, สร้าง profile ใหม่ (score 0 / streak 0), refresh แล้วยังล็อกอินอยู่, sign out กลับ `/login`
-- [ ] เล่นครบ 1 เกมกับบอททั้ง Easy และ Hard; ชนะ +1, แพ้ −1, เสมอ 0; ชนะติด 3 ครั้งได้ +2 แล้ว streak กลับ 0
+- [x] Google login ด้วยบัญชีผู้เล่น: เข้าเกมได้, สร้าง profile ใหม่ (score 0 / streak 0), refresh แล้วยังล็อกอินอยู่, sign out กลับ `/login`
+- [x] เล่นครบ 1 เกมกับบอททั้ง Easy และ Hard; ชนะ +1, แพ้ −1, เสมอ 0; ชนะติด 3 ครั้งได้ +2 แล้ว streak กลับ 0 (ผู้อนุมัติแจ้งว่าเล่นได้ปกติทั้ง 2 โหมด; เคสแพ้ เสมอ และ streak โบนัสยังไม่ได้ยืนยันรายเคส)
 - [ ] ออกจากเกมกลางคัน → กลับมามี Resume banner; Start new game ถามยืนยันและนับเป็นแพ้
-- [ ] `/login/admin` ด้วย `adminox@gmail.com` + รหัสผ่านที่ตั้งไว้ → เข้า `/admin` ได้, เห็นอีเมลผู้เล่นทุกคน
+- [x] `/login/admin` ด้วย `adminox@gmail.com` + รหัสผ่านที่ตั้งไว้ → เข้า `/admin` ได้, เห็นอีเมลผู้เล่นทุกคน
 - [ ] `/login/admin` ใส่รหัสผ่านผิด → ขึ้น "Invalid email or password." และไม่บอกว่าผิดช่องไหน
 - [ ] `/login/admin` ด้วยบัญชี Email/Password อื่นที่ไม่ใช่ admin (สร้างชั่วคราวใน console แล้วลบทิ้ง) → ขึ้นข้อความเดียวกัน และถูก sign out
 - [ ] ผู้เล่นทั่วไปเปิด `/admin` ตรง ๆ → เห็น not-authorized; Leaderboard ไม่แสดงอีเมล
