@@ -122,7 +122,7 @@ Lead-owned tasks involve approval-required actions (dependencies, config). Paral
 
 | ID | Task | Owner | Files | Skills | Depends on | AC | Status |
 |----|------|-------|-------|--------|-----------|----|--------|
-| T0 | Initial commit on `main`, create `development`, scaffold Vite React TS, install deps (react-router-dom, firebase, firebase-admin, @vercel/node, vitest, RTL, jsdom), tsconfig, eslint, scripts, `vercel.json`, `.env.example`, `.gitignore` | lead | repo root config files | – | Gate B | AC-24 | todo |
+| T0 | Initial commit on `main`, create `development`, scaffold Vite React TS, install deps (react-router-dom, firebase, firebase-admin, @vercel/node, vitest, RTL, jsdom), tsconfig, eslint, scripts, `vercel.json`, `.env.example`, `.gitignore` | lead | repo root config files | – | Gate B | AC-24 | done (Vercel smoke unverified) |
 | T1 | Pure logic: types, board rules, scoring, bot (easy/hard, injectable rng) | backend-developer | `shared/*.ts` | – | T0 | AC-8,10,11,12-15 | todo |
 | T2 | Unit tests for shared logic (all lines, scoring table, bot rate 0/1, hard never loses) | test-be-engineer | `shared/__tests__/*` | – | T1 | AC-8,10-15 | todo |
 | T3 | Server lib: firebaseAdmin, auth (token + isAdmin), config, http helpers, repos, gameService (transactions) | backend-developer | `server/*.ts` | – | T1 | AC-2,4,6,7,9,16,20 | todo |
