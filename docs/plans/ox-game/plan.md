@@ -133,7 +133,7 @@ Lead-owned tasks involve approval-required actions (dependencies, config). Paral
 | T8 | Login page (loading + error states) | frontend-developer | `src/features/login/*` | – | T7 | AC-1,2 | done |
 | T9 | Game page: setup, board, bot-thinking, result variants, resume/abandon, score panel | frontend-developer | `src/features/game/*`, `src/components/Board*` | – | T7, T4 contract | AC-5-9,12-17,23 | done (not viewed in browser) |
 | T10 | Leaderboard + Admin pages (+ not-authorized, empty, loading/error states) | frontend-developer | `src/features/leaderboard/*`, `src/features/admin/*` | – | T7 | AC-18-20,22 | done |
-| T11 | FE tests: auth guards, api client, Board a11y, game page flows, leaderboard/admin | test-fe-engineer | `src/**/__tests__/*` | skill-fe-unit-test (partial) | T8-T10 | AC-1,3,17,18-20,23 | todo |
+| T11 | FE tests: auth guards, api client, Board a11y, game page flows, leaderboard/admin | test-fe-engineer | `src/**/__tests__/*` | skill-fe-unit-test (partial) | T8-T10 | AC-1,3,17,18-20,23 | done (src 99.3% stmts, 6 defensive guards uncovered) |
 | T12 | Test cases from AC/UI-*; P1 → E2E | qa-engineer | `docs/plans/ox-game/test-cases.md` | – | Gate B | all | done |
 | T13 | Approve + install Playwright, config | lead | `package.json`, `playwright.config.ts` | – | T12 | – | todo |
 | T14 | E2E specs (login guard, play/win/loss/draw, streak bonus, resume, leaderboard, admin 403) with mocked API | qa-engineer | `e2e/*.spec.ts` | – | T8-T10, T13 | P1 cases | todo |
