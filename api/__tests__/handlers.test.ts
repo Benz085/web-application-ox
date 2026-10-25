@@ -135,6 +135,16 @@ describe('GET /api/leaderboard', () => {
   })
 })
 
+describe('GET /api/leaderboard isYou', () => {
+  it('flags only the callers own row', async () => {
+    seedUser('u1', { score: 3, wins: 3 })
+    seedUser('u2', { score: 5, wins: 5 })
+    const r = await call(leaderboardH, 'GET', 'player')
+    expect(r.body.players.map((p: { isYou: boolean }) => p.isYou)).toEqual([false, true])
+    for (const p of r.body.players) expect(p).not.toHaveProperty('uid')
+  })
+})
+
 describe('GET /api/admin/players', () => {
   it('admin gets all players including email and zero-game users', async () => {
     seedUser('a', { score: 3, wins: 3 })

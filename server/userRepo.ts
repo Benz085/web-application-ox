@@ -63,16 +63,17 @@ export async function getProfile(db: DbReader, uid: string): Promise<Profile | n
   return data ? toProfile(data) : null
 }
 
-export async function listLeaderboard(db: Db): Promise<LeaderboardEntry[]> {
+export async function listLeaderboard(db: Db, viewerUid: string): Promise<LeaderboardEntry[]> {
   const docs = await db.list(USERS, { orderBy: { field: 'score', direction: 'desc' }, limit: 100 })
   const rows = docs
-    .map((d) => toProfile(d.data))
+    .map((d) => ({ ...toProfile(d.data), isYou: d.id === viewerUid }))
     .filter((p) => p.wins + p.losses + p.draws > 0)
     .sort(
       (a, b) => b.score - a.score || b.wins - a.wins || a.displayName.localeCompare(b.displayName),
     )
   return rows.map((p, i) => ({
     rank: i + 1,
+    isYou: p.isYou,
     displayName: p.displayName,
     photoURL: p.photoURL,
     score: p.score,
