@@ -11,6 +11,9 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    // First test of a file pays the import/instrumentation cost; keep coverage runs from timing out.
+    testTimeout: 20_000,
+    hookTimeout: 20_000,
     include: ['src/**/*.test.{ts,tsx}', 'shared/**/*.test.ts', 'server/**/*.test.ts', 'api/**/*.test.ts'],
     coverage: {
       provider: 'v8',

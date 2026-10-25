@@ -12,6 +12,8 @@ import '@/web-app-ox/features/game/game.css'
 
 const STORAGE_KEY = 'ox:lastDifficulty'
 const ERROR_TEXT = "Couldn't reach the server. Try again."
+const STALE_TEXT = 'That move is no longer valid. The board was refreshed.'
+const STALE_ACTION_TEXT = 'That action is no longer valid. The screen was refreshed.'
 
 type Pending = 'loading' | 'start' | 'move' | 'abandon' | null
 
@@ -29,6 +31,15 @@ function saveDifficulty(value: Difficulty): void {
   } catch {
     // storage unavailable: the preference is just not remembered
   }
+}
+
+function statusOf(cause: unknown): number | null {
+  return cause instanceof Error && 'status' in cause && typeof cause.status === 'number' ? cause.status : null
+}
+
+function isStale(cause: unknown): boolean {
+  const status = statusOf(cause)
+  return status === 400 || status === 404 || status === 409
 }
 
 function cap(value: string): string {
@@ -85,6 +96,34 @@ export default function GamePage() {
     if (finished) titleRef.current?.focus()
   }, [finished])
 
+  /** Reload the server state after a failed request and rebuild the screen from it. */
+  const resync = async (cause: unknown, restoreBoard: boolean) => {
+    const message = isStale(cause) ? STALE_TEXT : ERROR_TEXT
+    try {
+      const [res, me] = await Promise.all([
+        apiGet<{ game: Game | null }>('/api/game/current'),
+        apiGet<{ profile: Profile | null }>('/api/me').catch(() => null),
+      ])
+      if (me?.profile) setProfile(me.profile)
+      const running = res.game && res.game.status === 'in_progress' ? res.game : null
+      if (restoreBoard) {
+        setGame(running)
+        setView(running ? 'play' : 'setup')
+        setUnfinished(null)
+        setConfirming(false)
+        if (running) setDifficulty(running.difficulty)
+      } else {
+        setUnfinished(running)
+        if (!running) setConfirming(false)
+      }
+    } catch {
+      // the reload failed too: keep what is on screen and show the generic message below
+      setError(ERROR_TEXT)
+      return
+    }
+    setError(message)
+  }
+
   const startGame = async (level: Difficulty) => {
     setPending('start')
     setError(null)
@@ -96,8 +135,14 @@ export default function GamePage() {
       setView('play')
       setPending(null)
     } catch (cause) {
-      if (cause instanceof Error && 'status' in cause && cause.status === 409) {
+      const status = statusOf(cause)
+      if (status === 409) {
         await loadCurrent()
+        return
+      }
+      if (status === 400 || status === 404) {
+        await loadCurrent()
+        setError((prev) => prev ?? STALE_ACTION_TEXT)
         return
       }
       setError(ERROR_TEXT)
@@ -119,8 +164,8 @@ export default function GamePage() {
         () => undefined,
       )
       await startGame(difficulty)
-    } catch {
-      setError(ERROR_TEXT)
+    } catch (cause) {
+      await resync(cause, false)
       setPending(null)
     }
   }
@@ -137,8 +182,8 @@ export default function GamePage() {
       })
       setGame(res.game)
       setProfile(res.profile)
-    } catch {
-      setError(ERROR_TEXT)
+    } catch (cause) {
+      await resync(cause, true)
     } finally {
       setOptimistic(null)
       setPending(null)

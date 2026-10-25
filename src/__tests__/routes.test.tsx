@@ -74,6 +74,23 @@ describe('routing (AC-1, AC-20, AC-25, AC-29)', () => {
     expect(screen.getByRole('link', { name: 'Admin' })).toBeInTheDocument()
   })
 
+  it('an unknown URL sends a signed-in player to the game', async () => {
+    at('/nope/nothing', {})
+    expect(await screen.findByRole('heading', { name: 'New game' })).toBeInTheDocument()
+    expect(screen.getByTestId('location')).toHaveTextContent(/^\/$/)
+  })
+
+  it('an unknown URL sends a logged-out user to /login', () => {
+    at('/nope', SIGNED_OUT)
+    expect(screen.getByTestId('location')).toHaveTextContent('/login')
+  })
+
+  it('an unknown URL sends an admin to /admin', async () => {
+    at('/nope', ADMIN)
+    expect(await screen.findByRole('heading', { name: /Admin/, level: 1 })).toBeInTheDocument()
+    expect(screen.getByTestId('location')).toHaveTextContent('/admin')
+  })
+
   it('shows the loading state on guarded routes while auth resolves', () => {
     at('/', { loading: true })
     expect(screen.getByRole('status')).toHaveTextContent('Loading…')

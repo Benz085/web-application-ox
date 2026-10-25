@@ -286,6 +286,19 @@ describe('GamePage resume banner (AC-9, UI-5)', () => {
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 
+  it('abandon 409: reloads the state (game already finished) and goes back to the plain setup', async () => {
+    await open(running)
+    mockedPost.mockRejectedValue(new ApiError(409, 'GAME_FINISHED', 'done'))
+    mockCurrent(null)
+    await userEvent.click(screen.getByRole('button', { name: 'Start new game' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Yes, start new game' }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('no longer valid')
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
+    expect(screen.queryByText('You have an unfinished game')).not.toBeInTheDocument()
+    expect(startButton()).toBeEnabled()
+    expect(mockedGet).toHaveBeenCalledWith('/api/game/current')
+  })
+
   it('shows an alert and stays on the confirm dialog when abandoning fails', async () => {
     await open(running)
     mockedPost.mockRejectedValue(new Error('x'))
@@ -337,15 +350,19 @@ describe('GamePage move flow (AC-7, UI-3)', () => {
     expect(mockedPost).toHaveBeenLastCalledWith('/api/game/move', { gameId: 'game-1', cell: 0 })
   })
 
-  it('on a server error shows an alert and the board reverts to the last server state', async () => {
+  it('on a network error reloads the current game, shows the generic message and the board reverts', async () => {
     await open()
-    await startWith(makeGame({ cells: 'O........' }))
+    const server = makeGame({ cells: 'O........' })
+    await startWith(server)
+    mockCurrent(server)
     const gate = deferred<never>()
     mockedPost.mockReturnValue(gate.promise)
     await userEvent.click(cell('Row 2, column 2, empty'))
     expect(cell('Row 2, column 2, X')).toBeInTheDocument()
     gate.reject(new ApiError(0, 'NETWORK_ERROR', 'net'))
     expect(await screen.findByRole('alert')).toHaveTextContent("Couldn't reach the server. Try again.")
+    expect(mockedGet).toHaveBeenCalledWith('/api/game/current')
+    expect(mockedGet).toHaveBeenCalledWith('/api/me')
     expect(cell('Row 2, column 2, empty')).toBeInTheDocument()
     expect(cell('Row 1, column 1, O')).toBeInTheDocument()
     expect(screen.getByText('Your turn')).toBeInTheDocument()
@@ -354,6 +371,76 @@ describe('GamePage move flow (AC-7, UI-3)', () => {
     mockedPost.mockResolvedValueOnce({ game: makeGame({ cells: 'O...X...O' }), profile: PROFILE })
     await userEvent.click(cell('Row 2, column 2, empty'))
     await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument())
+  })
+
+  it('move 400 INVALID_MOVE: the board is refreshed from the server and the 4xx message shows', async () => {
+    await open()
+    await startWith(makeGame())
+    // the server already applied the move whose response was lost
+    mockCurrent(makeGame({ cells: 'X...O....' }))
+    mockedPost.mockRejectedValue(new ApiError(400, 'INVALID_MOVE', 'taken'))
+    await userEvent.click(cell('Row 1, column 1, empty'))
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'That move is no longer valid. The board was refreshed.',
+    )
+    expect(cell('Row 1, column 1, X')).toBeInTheDocument()
+    expect(cell('Row 2, column 2, O')).toBeInTheDocument()
+    expect(screen.getByText('Your turn')).toBeInTheDocument()
+  })
+
+  it('move 409 GAME_FINISHED: returns to the setup', async () => {
+    await open()
+    await startWith(makeGame())
+    mockCurrent(makeGame({ status: 'lost' }))
+    mockedPost.mockRejectedValue(new ApiError(409, 'GAME_FINISHED', 'done'))
+    await userEvent.click(cell('Row 1, column 1, empty'))
+    expect(await screen.findByRole('heading', { name: 'New game' })).toBeInTheDocument()
+    expect(screen.getByRole('alert')).toHaveTextContent('That move is no longer valid.')
+    expect(screen.queryByRole('group', { name: 'Game board' })).not.toBeInTheDocument()
+    expect(startButton()).toBeEnabled()
+  })
+
+  it('move 404 with no game on the server returns to the setup and refreshes the profile', async () => {
+    await open()
+    await startWith(makeGame())
+    mockCurrent(null, { profile: makeProfile({ score: 9, streak: 0 }) })
+    mockedPost.mockRejectedValue(new ApiError(404, 'GAME_NOT_FOUND', 'gone'))
+    await userEvent.click(cell('Row 1, column 1, empty'))
+    expect(await screen.findByRole('heading', { name: 'New game' })).toBeInTheDocument()
+    expect(screen.getByText('0/3')).toBeInTheDocument()
+  })
+
+  it('a move failure followed by a failed reload shows the generic message and keeps the board', async () => {
+    await open()
+    await startWith(makeGame())
+    mockedGet.mockRejectedValue(new Error('down'))
+    mockedPost.mockRejectedValue(new ApiError(400, 'INVALID_MOVE', 'x'))
+    await userEvent.click(cell('Row 1, column 1, empty'))
+    expect(await screen.findByRole('alert')).toHaveTextContent("Couldn't reach the server. Try again.")
+    expect(cell('Row 1, column 1, empty')).toBeInTheDocument()
+  })
+
+  it('a move failure still restores the board when /api/me fails or has no profile', async () => {
+    await open()
+    await startWith(makeGame())
+    mockCurrent(makeGame({ cells: 'X...O....' }), new Error('me down'))
+    mockedPost.mockRejectedValueOnce(new ApiError(400, 'INVALID_MOVE', 'x'))
+    await userEvent.click(cell('Row 1, column 1, empty'))
+    expect(await screen.findByRole('alert')).toBeInTheDocument()
+    expect(cell('Row 2, column 2, O')).toBeInTheDocument()
+    mockCurrent(makeGame({ cells: 'X...O....' }), { profile: null })
+    mockedPost.mockRejectedValueOnce(new ApiError(400, 'INVALID_MOVE', 'x'))
+    await userEvent.click(cell('Row 1, column 3, empty'))
+    await waitFor(() => expect(mockedGet).toHaveBeenCalledTimes(5))
+    expect(cell('Row 2, column 2, O')).toBeInTheDocument()
+  })
+
+  it('start 400 reloads the current game and shows the refreshed message', async () => {
+    await open()
+    mockedPost.mockRejectedValue(new ApiError(400, 'VALIDATION_ERROR', 'bad'))
+    await userEvent.click(startButton())
+    expect(await screen.findByRole('alert')).toHaveTextContent('That action is no longer valid.')
+    expect(mockedGet).toHaveBeenCalledTimes(2)
   })
 })
 

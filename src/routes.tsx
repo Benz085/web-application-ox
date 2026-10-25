@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import RequireAdmin from '@/web-app-ox/auth/RequireAdmin'
 import RequireAuth from '@/web-app-ox/auth/RequireAuth'
 import Layout from '@/web-app-ox/components/Layout'
@@ -21,6 +21,7 @@ export default function AppRoutes() {
         <Route element={<RequireAdmin />}>
           <Route path="/admin" element={<AdminPage />} />
         </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
   )

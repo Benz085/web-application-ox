@@ -157,9 +157,20 @@ test.describe('S2 play vs bot', () => {
     await startGame(page)
     api.fail('move', { status: 409, code: 'INVALID_MOVE' })
     await cell(page, 4).click()
-    await expect(page.getByRole('alert')).toContainText(SERVER_ERROR)
+    // The client re-syncs with the server and explains why the move was refused.
+    await expect(page.getByRole('alert')).toContainText('That move is no longer valid')
     await expect(cell(page, 4)).toHaveAccessibleName(/, empty$/)
     await expect(page.getByText('Your turn', { exact: true })).toBeVisible()
+    await expect(cell(page, 4)).toHaveAttribute('aria-disabled', 'false')
+  })
+
+  test('TC-29 UI recovers when the move request fails on the server (5xx)', async ({ page, api }) => {
+    await gotoAs(page, 'player', '/')
+    await startGame(page)
+    api.fail('move', { status: 500 })
+    await cell(page, 4).click()
+    await expect(page.getByRole('alert')).toContainText(SERVER_ERROR)
+    await expect(cell(page, 4)).toHaveAccessibleName(/, empty$/)
     await expect(cell(page, 4)).toHaveAttribute('aria-disabled', 'false')
   })
 
