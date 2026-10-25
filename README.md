@@ -8,8 +8,6 @@
 - **ฐานข้อมูล:** Cloud Firestore (เข้าถึงผ่าน API เท่านั้น)
 - **Test:** Vitest + React Testing Library, Playwright (E2E)
 
-เอกสารออกแบบอยู่ใน [docs/plans/ox-game/](docs/plans/ox-game/): [spec.md](docs/plans/ox-game/spec.md), [plan.md](docs/plans/ox-game/plan.md), [mockups](docs/plans/ox-game/mockups/index.md), [test-cases.md](docs/plans/ox-game/test-cases.md)
-
 ## กติกาเกม
 
 - ผู้เล่นเป็น **X** เดินก่อน สลับกับบอท (O) บนกระดาน 3×3 ใครได้ 3 ตัวติดกัน (แถว/คอลัมน์/ทแยง) ชนะ ถ้ากระดานเต็มโดยไม่มีผู้ชนะคือเสมอ
@@ -91,7 +89,7 @@ npx vercel dev
 
 ครั้งแรกต้องติดตั้ง browser สำหรับ Playwright: `npx playwright install chromium`
 
-E2E ใช้ผู้ใช้ปลอมและ API ปลอม จึง**ไม่ครอบคลุม** การล็อกอิน Google จริง, การล็อกอิน Email/Password จริง และ Firestore จริง — สิ่งเหล่านี้ทดสอบด้วยมือ (ดู manual-UAT ใน [test-cases.md](docs/plans/ox-game/test-cases.md))
+E2E ใช้ผู้ใช้ปลอมและ API ปลอม จึง**ไม่ครอบคลุม** การล็อกอิน Google จริง, การล็อกอิน Email/Password จริง และ Firestore จริง — สิ่งเหล่านี้ทดสอบด้วยมือกับ Firebase จริง
 
 ## โครงสร้างโปรเจกต์
 
@@ -101,7 +99,6 @@ server/    โค้ดฝั่ง server (auth, repo, game service) ไม่�
 shared/    ตรรกะบริสุทธิ์และ type ที่ใช้ร่วมกัน (กติกา, บอท, คะแนน)
 src/       Vite SPA (import ใน src ใช้ alias `@/web-app-ox/...` ชี้ไปที่ src/)
 e2e/       Playwright specs
-docs/      spec, plan, mockups, test cases
 ```
 
 ## Deploy บน Vercel
