@@ -20,7 +20,7 @@
 ## B. ตั้งค่า Firebase console (ก่อนทดสอบจริง; ทำขนานกับ Phase 4 ได้)
 
 - [x] **Authentication → Sign-in method:** เปิด **Google** และ **Email/Password** (ยืนยันว่า Email/Password เปิดอยู่จริง)
-- [ ] **Authentication → Settings → User actions:** ปิด "Enable create (sign-up)" ถ้ามีตัวเลือกนี้ (กันคนสมัครบัญชี Email/Password เอง)
+- [x] **Authentication → Settings → User actions:** ปิด "Enable create (sign-up)" ถ้ามีตัวเลือกนี้ (กันคนสมัครบัญชี Email/Password เอง)
 - [ ] **Authentication → Settings → Authorized domains:** เพิ่มโดเมน Vercel ของโปรเจกต์ (`localhost` มีให้แล้ว) — ทำหลังรู้โดเมน
 - [x] **Firestore Database:** สร้างฐานข้อมูล (production mode; rules ทีมจะเขียนเป็น deny-all แล้วคุณ deploy เอง)
 - [x] **Project settings → General → Your apps:** เพิ่ม Web app แล้วคัดลอกค่า config (apiKey, authDomain, projectId, appId) สำหรับ `VITE_FIREBASE_*`
@@ -40,20 +40,20 @@
 - [ ] ตรวจรายงานผล validation (lint, typecheck, test, build, E2E), QA verdict และ review findings
 - [ ] อนุมัติให้ push branch และเปิด PR เข้า `main` (remote: `origin` = https://github.com/Benz085/web-application-ox.git)
 
-## E. UAT ด้วยมือ (ทีมทดสอบ OAuth จริงอัตโนมัติไม่ได้)
+## E. UAT ด้วยมือ (ฉบับย่อ — เฉพาะสิ่งที่ E2E กับ unit test พิสูจน์กับ Firebase จริงไม่ได้)
 
-ทดสอบกับ Firebase จริงหลังใส่ env แล้ว (`vercel dev` หรือ deploy จริง)
+ทดสอบกับ Firebase จริงด้วย `npm run dev` (ตัดข้อที่ test ครอบอยู่แล้วออก: เคส 403 ของบัญชีที่ไม่ใช่ admin, token ผิด, กดพร้อมกันสองแท็บ, `config/bot`, curl, การอ่าน README)
 
-- [x] Google login ด้วยบัญชีผู้เล่น: เข้าเกมได้, สร้าง profile ใหม่ (score 0 / streak 0), refresh แล้วยังล็อกอินอยู่, sign out กลับ `/login`
-- [x] เล่นครบ 1 เกมกับบอททั้ง Easy และ Hard; ชนะ +1, แพ้ −1, เสมอ 0; ชนะติด 3 ครั้งได้ +2 แล้ว streak กลับ 0 (ผู้อนุมัติแจ้งว่าเล่นได้ปกติทั้ง 2 โหมด; เคสแพ้ เสมอ และ streak โบนัสยังไม่ได้ยืนยันรายเคส)
-- [ ] ออกจากเกมกลางคัน → กลับมามี Resume banner; Start new game ถามยืนยันและนับเป็นแพ้
-- [x] `/login/admin` ด้วย `adminox@gmail.com` + รหัสผ่านที่ตั้งไว้ → เข้า `/admin` ได้, เห็นอีเมลผู้เล่นทุกคน
-- [ ] `/login/admin` ใส่รหัสผ่านผิด → ขึ้น "Invalid email or password." และไม่บอกว่าผิดช่องไหน
-- [ ] `/login/admin` ด้วยบัญชี Email/Password อื่นที่ไม่ใช่ admin (สร้างชั่วคราวใน console แล้วลบทิ้ง) → ขึ้นข้อความเดียวกัน และถูก sign out
-- [ ] ผู้เล่นทั่วไปเปิด `/admin` ตรง ๆ → เห็น not-authorized; Leaderboard ไม่แสดงอีเมล
-- [ ] บัญชี admin ไม่เล่นเกมและไม่อยู่ใน Leaderboard / รายชื่อผู้เล่น
-- [ ] ยังไม่ล็อกอินแล้วเข้า `/` หรือ `/leaderboard` → ไป `/login`; เข้า `/admin` → ไป `/login/admin`
-- [ ] ทดสอบบนมือถือ (≥ 360px) และอย่างน้อย 2 browser
+- [x] Google login ด้วยบัญชีผู้เล่น, เล่น Easy และ Hard ได้ปกติ
+- [x] `/login/admin` ด้วย `adminox@gmail.com` เข้า `/admin` ได้
+- [ ] **คะแนนบน Firestore จริง:** เล่นให้ได้ ชนะ (+1), แพ้ (−1), เสมอ (0) อย่างละครั้ง แล้วรีเฟรช คะแนนต้องคงอยู่ (Easy ชนะง่าย ใช้ชนะติด 3 ครั้งเพื่อดูโบนัส +2 และ streak กลับ 0)
+- [ ] **เกมค้าง:** เดินหมากแล้วรีโหลดหน้า ต้องเห็น Resume banner และกระดานเดิม; Start new game ต้องถามยืนยันและนับเป็นแพ้ (−1)
+- [ ] **Leaderboard:** แถวของคุณขึ้น "You", ไม่มีอีเมล
+- [ ] **admin:** ใน `/admin` เห็นผู้เล่นพร้อมอีเมล และไม่เห็นบัญชี admin เองในรายการ; `/admin` ตอนล็อกอินเป็นผู้เล่นต้องเห็น not-authorized
+- [ ] **รหัสผ่านผิดที่ `/login/admin`:** ต้องขึ้น "Invalid email or password." เท่านั้น
+- [ ] **มือถือ:** เปิดหน้าเกม, Leaderboard (ชื่อไม่ตัดกลางคำ) และ Admin ที่ความกว้าง ~360px ผ่าน DevTools ดูว่าไม่มี scroll แนวนอน
+
+ทั้ง 5 ข้อที่ยังไม่ติ๊ก ใช้เวลาราว 10–15 นาที ไม่ต้องทดสอบหลาย browser สำหรับโจทย์นี้
 
 ## F. Deploy และส่งงาน
 
