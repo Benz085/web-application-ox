@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
-import { useAuth } from 'web-app-ox/auth/useAuth'
+import { useAuth } from '@/web-app-ox/auth/useAuth'
 
 const CANCELLED_CODES = ['auth/popup-closed-by-user', 'auth/cancelled-popup-request']
 

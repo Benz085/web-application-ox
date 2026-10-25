@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
-import { useAuth } from 'web-app-ox/auth/useAuth'
-import type { Profile } from 'web-app-ox/api/types'
+import { useAuth } from '@/web-app-ox/auth/useAuth'
+import type { Profile } from '@/web-app-ox/api/types'
 import type { LeaderboardEntry } from '../../../shared/types'
-import { useLeaderboard } from 'web-app-ox/features/leaderboard/useLeaderboard'
+import { useLeaderboard } from '@/web-app-ox/features/leaderboard/useLeaderboard'
 
 /**
  * The leaderboard payload has no uid (and no email), so the current user's row is matched by

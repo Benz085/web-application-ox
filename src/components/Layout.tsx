@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import Header from 'web-app-ox/components/Header'
+import Header from '@/web-app-ox/components/Header'
 
 export default function Layout() {
   return (

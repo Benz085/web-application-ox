@@ -1,4 +1,4 @@
-import type { AuthUser, Unsubscribe } from 'web-app-ox/auth/types'
+import type { AuthUser, Unsubscribe } from '@/web-app-ox/auth/types'
 
 // Fake auth for E2E runs. Only loaded when VITE_E2E === 'true' (see authModule.ts).
 // Pick the user with `?e2eUser=admin|player|none`; the choice is kept in localStorage.

@@ -1,6 +1,6 @@
 import { useRef, useState, type FormEvent } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
-import { useAuth } from 'web-app-ox/auth/useAuth'
+import { useAuth } from '@/web-app-ox/auth/useAuth'
 
 const INVALID_CODES = [
   'auth/invalid-credential',
