@@ -13,7 +13,7 @@ describe('StatsPanel (AC-17, UI-2)', () => {
   it('shows score, streak x/3 and W/L/D', () => {
     render(<StatsPanel profile={makeProfile({ score: -2, streak: 1, wins: 6, losses: 8, draws: 3 })} />)
     expect(screen.getByRole('heading', { name: 'Your stats' })).toBeInTheDocument()
-    expect(screen.getByText('-2')).toBeInTheDocument()
+    expect(screen.getByText('−2')).toHaveClass('neg')
     expect(screen.getByText('1/3')).toBeInTheDocument()
     const record = screen.getByText('Wins').closest('dl') as HTMLElement
     expect(within(record).getByText('Wins').nextElementSibling).toHaveTextContent('6')

@@ -1,3 +1,4 @@
+import { formatScore } from '@/web-app-ox/features/admin/sort'
 import type { Profile } from '../../../shared/types'
 
 const STREAK_TARGET = 3
@@ -17,7 +18,7 @@ export default function StatsPanel({ profile }: { profile: Profile | null }) {
         Your stats
       </h2>
       <p className="stats__label">Score</p>
-      <p className="stats__score">{profile.score}</p>
+      <p className={profile.score < 0 ? 'stats__score neg' : 'stats__score'}>{formatScore(profile.score)}</p>
       <p className="stats__label">Win streak</p>
       <p className="stats__streak">
         <span className="stats__dots" aria-hidden="true">
