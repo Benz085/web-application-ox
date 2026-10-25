@@ -1,3 +1,13 @@
+import { BrowserRouter } from 'react-router-dom'
+import { AuthProvider } from './auth/AuthContext'
+import AppRoutes from './routes'
+
 export default function App() {
-  return <h1>OX Game</h1>
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
+    </BrowserRouter>
+  )
 }
