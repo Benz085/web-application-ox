@@ -135,7 +135,7 @@ Lead-owned tasks involve approval-required actions (dependencies, config). Paral
 | T10 | Leaderboard + Admin pages (+ not-authorized, empty, loading/error states) | frontend-developer | `src/features/leaderboard/*`, `src/features/admin/*` | – | T7 | AC-18-20,22 | done |
 | T11 | FE tests: auth guards, api client, Board a11y, game page flows, leaderboard/admin | test-fe-engineer | `src/**/__tests__/*` | skill-fe-unit-test (partial) | T8-T10 | AC-1,3,17,18-20,23 | done (src 99.3% stmts, 6 defensive guards uncovered) |
 | T12 | Test cases from AC/UI-*; P1 → E2E | qa-engineer | `docs/plans/ox-game/test-cases.md` | – | Gate B | all | done |
-| T13 | Approve + install Playwright, config | lead | `package.json`, `playwright.config.ts` | – | T12 | – | todo |
+| T13 | Approve + install Playwright, config | lead | `package.json`, `playwright.config.ts` | – | T12 | – | done (approved by approver) |
 | T14 | E2E specs (login guard, play/win/loss/draw, streak bonus, resume, leaderboard, admin 403) with mocked API | qa-engineer | `e2e/*.spec.ts` | – | T8-T10, T13 | P1 cases | todo |
 | T15 | README (ภาษาไทย) + `.env.example` final | lead | `README.md`, `.env.example` | – | T4,T10 | AC-24 | todo |
 | T16 | QA verify (run E2E + all cases, exploratory, compare mockups) | qa-engineer | test-case results only | – | T11,T14 | all | todo |
