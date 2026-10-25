@@ -34,12 +34,12 @@
 
 ## ตั้งค่า Firebase
 
-1. สร้างโปรเจกต์ที่ [Firebase console](https://console.firebase.google.com/) (ชื่อ `<ชื่อ-firebase-project>`)
+1. สร้างโปรเจกต์ที่ [Firebase console](https://console.firebase.google.com/) (โปรเจกต์ `web-application-ox`)
 2. **Authentication → Sign-in method** เปิด **Google** และ **Email/Password**
 3. **Authentication → Users → Add user** สร้างผู้ใช้ `adminox@gmail.com` พร้อมรหัสผ่าน
    - **ต้องสร้างก่อนเปิดเว็บให้คนอื่นใช้** เพราะ Firebase อนุญาต 1 บัญชีต่ออีเมล ถ้าไม่มีบัญชีนี้อยู่ คนอื่นสมัครอีเมลนี้ก่อนได้
    - ถ้าในหน้า Authentication → Settings → User actions มีตัวเลือก "Enable create (sign-up)" แนะนำให้ปิด
-4. **Authentication → Settings → Authorized domains** เพิ่มโดเมนที่ deploy (เช่น `<โดเมน-vercel>`) (`localhost` มีให้แล้ว)
+4. **Authentication → Settings → Authorized domains** เพิ่มโดเมนที่ deploy (เช่น `web-application-ox.vercel.app`) (`localhost` มีให้แล้ว)
 5. **Firestore Database** สร้างฐานข้อมูล แล้ว deploy [firestore.rules](firestore.rules) (ปฏิเสธการอ่านเขียนจาก client ทั้งหมด การเข้าถึงข้อมูลทำผ่าน API ด้วย Admin SDK เท่านั้น)
 6. **Project settings → General → Your apps** เพิ่ม Web app แล้วคัดลอกค่า config ไปใส่ตัวแปร `VITE_FIREBASE_*`
 7. **Project settings → Service accounts → Generate new private key** แล้วเอาค่า `project_id`, `client_email`, `private_key` ไปใส่ตัวแปร `FIREBASE_*` (ห้าม commit ไฟล์ key และห้ามแชร์)
@@ -112,7 +112,7 @@ docs/      spec, plan, mockups, test cases
 4. Deploy แล้วเพิ่มโดเมนที่ได้ใน Firebase Authorized domains
 5. ตรวจว่าเปิด `/login`, `/login/admin` ได้ และล็อกอินแล้วเรียก `/api/me` สำเร็จ
 
-ชื่อโปรเจกต์และโดเมนข้างต้น (`<ชื่อ-firebase-project>`, `<โดเมน-vercel>`) เป็น placeholder ให้แก้เป็นค่าจริง
+โปรเจกต์ Firebase คือ `web-application-ox` และโดเมน production คือ `web-application-ox.vercel.app`
 
 ## ความปลอดภัย (สรุป)
 
