@@ -3,14 +3,10 @@ import RequireAdmin from './auth/RequireAdmin'
 import RequireAuth from './auth/RequireAuth'
 import Layout from './components/Layout'
 import AdminPage from './features/admin/AdminPage'
+import GamePage from './features/game/GamePage'
 import LeaderboardPage from './features/leaderboard/LeaderboardPage'
 import LoginPage from './features/login/LoginPage'
 import LoginAdminPage from './features/login-admin/LoginAdminPage'
-
-// Placeholder: the game page is wired in by a later task.
-function GamePage() {
-  return <h1>Game</h1>
-}
 
 export default function AppRoutes() {
   return (
