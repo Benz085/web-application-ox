@@ -1,0 +1,12 @@
+node_modules
+dist
+.vercel
+.env
+.env.*
+!.env.example
+coverage
+playwright-report
+test-results
+.DS_Store
+*.log
+*-firebase-adminsdk-*.json
