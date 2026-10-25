@@ -124,7 +124,7 @@ Lead-owned tasks involve approval-required actions (dependencies, config). Paral
 |----|------|-------|-------|--------|-----------|----|--------|
 | T0 | Initial commit on `main`, create `development`, scaffold Vite React TS, install deps (react-router-dom, firebase, firebase-admin, @vercel/node, vitest, RTL, jsdom), tsconfig, eslint, scripts, `vercel.json`, `.env.example`, `.gitignore` | lead | repo root config files | – | Gate B | AC-24 | done (Vercel smoke unverified) |
 | T1 | Pure logic: types, board rules, scoring, bot (easy/hard, injectable rng) | backend-developer | `shared/*.ts` | – | T0 | AC-8,10,11,12-15 | done |
-| T2 | Unit tests for shared logic (all lines, scoring table, bot rate 0/1, hard never loses) | test-be-engineer | `shared/__tests__/*` | – | T1 | AC-8,10-15 | todo |
+| T2 | Unit tests for shared logic (all lines, scoring table, bot rate 0/1, hard never loses) | test-be-engineer | `shared/__tests__/*` | – | T1 | AC-8,10-15 | done |
 | T3 | Server lib: firebaseAdmin, auth (token + isAdmin), config, http helpers, repos, gameService (transactions) | backend-developer | `server/*.ts` | – | T1 | AC-2,4,6,7,9,16,20 | todo |
 | T4 | API handlers (me, game/current, start, move, abandon, leaderboard, admin/players) | backend-developer | `api/**/*.ts` | – | T3 | AC-4,5-7,9,18-20 | todo |
 | T5 | Tests for server + handlers with fake Firestore and fake auth (401, 403, validation, idempotency, resume, leaderboard no email) | test-be-engineer | `server/__tests__/*`, `api/__tests__/*` | – | T3,T4 | AC-4,6,7,9,16,18-20 | todo |
