@@ -1,26 +1,6 @@
 import { Link } from 'react-router-dom'
-import { useAuth } from '@/web-app-ox/auth/useAuth'
-import type { Profile } from '@/web-app-ox/api/types'
 import type { LeaderboardEntry } from '../../../shared/types'
 import { useLeaderboard } from '@/web-app-ox/features/leaderboard/useLeaderboard'
-
-/**
- * The leaderboard payload has no uid (and no email), so the current user's row is matched by
- * display name + photo, narrowed by stats when several players share the same name.
- */
-function findOwnRank(players: LeaderboardEntry[], profile: Profile | null): number | null {
-  if (!profile) return null
-  const same = players.filter((p) => p.displayName === profile.displayName && p.photoURL === profile.photoURL)
-  if (same.length === 0) return null
-  const exact = same.find(
-    (p) =>
-      p.score === profile.score &&
-      p.wins === profile.wins &&
-      p.losses === profile.losses &&
-      p.draws === profile.draws,
-  )
-  return (exact ?? same[0]).rank
-}
 
 function formatScore(score: number): string {
   return score < 0 ? `−${Math.abs(score)}` : String(score)
@@ -38,7 +18,6 @@ function RankCell({ rank }: { rank: number }) {
 }
 
 export default function LeaderboardPage() {
-  const { profile } = useAuth()
   const { state, retry } = useLeaderboard()
 
   return (
@@ -76,7 +55,7 @@ export default function LeaderboardPage() {
       ) : null}
 
       {state.status === 'ready' && state.players.length > 0 ? (
-        <LeaderboardTable players={state.players} ownRank={findOwnRank(state.players, profile)} />
+        <LeaderboardTable players={state.players} ownRank={state.players.find((p) => p.isYou)?.rank ?? null} />
       ) : null}
     </section>
   )

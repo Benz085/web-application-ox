@@ -7,7 +7,7 @@ import { listLeaderboard } from '../server/userRepo.js'
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   await respond(res, async () => {
     assertMethod(req, 'GET')
-    await authenticate(req)
-    return { body: { players: await listLeaderboard(getDb()) } }
+    const user = await authenticate(req)
+    return { body: { players: await listLeaderboard(getDb(), user.uid) } }
   })
 }

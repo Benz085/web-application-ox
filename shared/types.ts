@@ -30,6 +30,8 @@ export interface Profile {
 
 export interface LeaderboardEntry {
   rank: number
+  /** True for the row of the signed-in viewer (no uid is exposed). */
+  isYou: boolean
   displayName: string
   photoURL: string | null
   score: number

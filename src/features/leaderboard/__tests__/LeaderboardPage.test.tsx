@@ -3,7 +3,7 @@ import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { apiGet } from '@/web-app-ox/api/client'
-import { deferred, makeEntry, makeProfile } from '@/web-app-ox/test/fixtures'
+import { deferred, makeEntry } from '@/web-app-ox/test/fixtures'
 import { renderAt } from '@/web-app-ox/test/render'
 import type { LeaderboardEntry } from '../../../../shared/types'
 import LeaderboardPage from '@/web-app-ox/features/leaderboard/LeaderboardPage'
@@ -95,11 +95,11 @@ describe('LeaderboardPage rows (AC-18, UI-6)', () => {
 describe('LeaderboardPage "You" row', () => {
   const players = [
     makeEntry({ rank: 1, displayName: 'Sam Rivers', score: 10 }),
-    makeEntry({ rank: 2, displayName: 'Alex Morgan', score: 4, wins: 6, losses: 2, draws: 1 }),
+    makeEntry({ rank: 2, displayName: 'Alex Morgan', score: 4, isYou: true }),
   ]
 
-  it('marks the current user row with the You tag and aria-current', async () => {
-    show(players, { auth: { profile: makeProfile() } })
+  it('marks the row the server flagged isYou with the You tag and aria-current', async () => {
+    show(players)
     await screen.findByRole('table')
     const mine = rowOf('Alex Morgan')
     expect(mine).toHaveAttribute('aria-current', 'true')
@@ -109,48 +109,19 @@ describe('LeaderboardPage "You" row', () => {
     expect(screen.getAllByText('You')).toHaveLength(1)
   })
 
-  it('picks the exact stats match among players with the same name and photo', async () => {
-    show(
-      [
-        makeEntry({ rank: 1, displayName: 'Alex Morgan', score: 9, wins: 9 }),
-        makeEntry({ rank: 2, displayName: 'Alex Morgan', score: 4, wins: 6, losses: 2, draws: 1 }),
-      ],
-      { auth: { profile: makeProfile() } },
-    )
+  it('tells apart two players with the same name and photo', async () => {
+    show([
+      makeEntry({ rank: 1, displayName: 'Alex Morgan', score: 9 }),
+      makeEntry({ rank: 2, displayName: 'Alex Morgan', score: 4, isYou: true }),
+    ])
     await screen.findByRole('table')
     const rows = screen.getAllByRole('row').slice(1)
     expect(rows[0]).not.toHaveAttribute('aria-current')
     expect(rows[1]).toHaveAttribute('aria-current', 'true')
   })
 
-  it('falls back to the first same-name player when stats differ', async () => {
-    show(
-      [
-        makeEntry({ rank: 1, displayName: 'Alex Morgan', score: 9, wins: 9 }),
-        makeEntry({ rank: 2, displayName: 'Alex Morgan', score: 8, wins: 8 }),
-      ],
-      { auth: { profile: makeProfile() } },
-    )
-    await screen.findByRole('table')
-    expect(screen.getAllByRole('row').slice(1)[0]).toHaveAttribute('aria-current', 'true')
-  })
-
-  it('does not match a same-name player with a different photo', async () => {
-    show([makeEntry({ displayName: 'Alex Morgan', photoURL: 'https://img.example.test/other.png' })], {
-      auth: { profile: makeProfile() },
-    })
-    await screen.findByRole('table')
-    expect(screen.queryByText('You')).not.toBeInTheDocument()
-  })
-
-  it('shows no You tag without a profile or when the user is not listed', async () => {
-    show(players)
-    await screen.findByRole('table')
-    expect(screen.queryByText('You')).not.toBeInTheDocument()
-  })
-
-  it('shows no You tag when the profile name is not on the board', async () => {
-    show(players, { auth: { profile: makeProfile({ displayName: 'Nobody' }) } })
+  it('shows no You tag when the viewer is not on the board', async () => {
+    show([makeEntry({ rank: 1, displayName: 'Sam Rivers' })])
     await screen.findByRole('table')
     expect(screen.queryByText('You')).not.toBeInTheDocument()
   })

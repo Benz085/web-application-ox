@@ -36,6 +36,7 @@ export function makeProfile(overrides: Partial<Profile> = {}): Profile {
 export function makeEntry(overrides: Partial<LeaderboardEntry> = {}): LeaderboardEntry {
   return {
     rank: 1,
+    isYou: false,
     displayName: 'Sam Rivers',
     photoURL: null,
     score: 10,

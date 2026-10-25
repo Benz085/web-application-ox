@@ -89,11 +89,12 @@ describe('listLeaderboard', () => {
     user(db, 'e', 'Idle', stats(0, 0))
     user(db, 'f', 'Drawer', stats(0, 0, 0, 1))
     user(db, 'g', 'Neg', stats(-2, 0, 2))
-    const rows = await listLeaderboard(db)
+    const rows = await listLeaderboard(db, 'b')
     expect(rows.map((r) => r.displayName)).toEqual(['Top', 'Bob', 'Amy', 'Zed', 'Drawer', 'Neg'])
+    expect(rows.map((r) => r.isYou)).toEqual([false, false, true, false, false, false])
     expect(rows.map((r) => r.rank)).toEqual([1, 2, 3, 4, 5, 6])
     for (const r of rows) {
-      expect(Object.keys(r).sort()).toEqual(['displayName', 'draws', 'losses', 'photoURL', 'rank', 'score', 'wins'])
+      expect(Object.keys(r).sort()).toEqual(['displayName', 'draws', 'isYou', 'losses', 'photoURL', 'rank', 'score', 'wins'])
       expect(r).not.toHaveProperty('email')
     }
     expect(JSON.stringify(rows)).not.toContain('example.test')
@@ -102,8 +103,9 @@ describe('listLeaderboard', () => {
   it('returns at most 100 entries', async () => {
     const db = createFakeDb()
     for (let i = 0; i < 120; i++) user(db, `u${i}`, `P${i}`, stats(i, 1))
-    const rows = await listLeaderboard(db)
+    const rows = await listLeaderboard(db, 'nobody')
     expect(rows).toHaveLength(100)
+    expect(rows.some((r) => r.isYou)).toBe(false)
     expect(rows[0].score).toBe(119)
   })
 })
