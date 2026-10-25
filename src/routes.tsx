@@ -2,22 +2,14 @@ import { Route, Routes } from 'react-router-dom'
 import RequireAdmin from './auth/RequireAdmin'
 import RequireAuth from './auth/RequireAuth'
 import Layout from './components/Layout'
+import AdminPage from './features/admin/AdminPage'
+import LeaderboardPage from './features/leaderboard/LeaderboardPage'
+import LoginPage from './features/login/LoginPage'
+import LoginAdminPage from './features/login-admin/LoginAdminPage'
 
-// Placeholders: later tasks (T8-T10) replace these with real pages under src/features/.
-function LoginPage() {
-  return <h1>Login</h1>
-}
-function LoginAdminPage() {
-  return <h1>Admin login</h1>
-}
+// Placeholder: the game page is wired in by a later task.
 function GamePage() {
   return <h1>Game</h1>
-}
-function LeaderboardPage() {
-  return <h1>Leaderboard</h1>
-}
-function AdminPage() {
-  return <h1>Admin</h1>
 }
 
 export default function AppRoutes() {
