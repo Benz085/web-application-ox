@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const PORT = 5173
+const PORT = Number(process.env.E2E_PORT ?? 5173)
 const baseURL = process.env.E2E_BASE_URL ?? `http://localhost:${PORT}`
 
 // E2E runs against the Vite dev server with the fake auth module (VITE_E2E=true) and

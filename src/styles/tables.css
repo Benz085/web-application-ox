@@ -112,7 +112,7 @@
 
 .player__name {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .avatar {
@@ -155,6 +155,15 @@
   .lb-table td {
     padding-left: 6px;
     padding-right: 6px;
+  }
+
+  .lb-table .player {
+    gap: var(--space-1);
+  }
+
+  .lb-table .avatar {
+    width: 24px;
+    height: 24px;
   }
 
   .lb-table .th-full {

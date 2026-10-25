@@ -11,3 +11,4 @@ test-results
 *.log
 *-firebase-adminsdk-*.json
 .claude
+/firebase.config.ts
