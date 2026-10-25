@@ -1,4 +1,5 @@
 import { useRef, useState, type KeyboardEvent } from 'react'
+import '@/web-app-ox/components/Board.css'
 import type { Board as BoardState } from '../../shared/types'
 
 export interface BoardProps {
