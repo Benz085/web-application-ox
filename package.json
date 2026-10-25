@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "node scripts/check-no-e2e.mjs",
     "typecheck": "tsc -b",
     "test": "vitest run",
     "e2e": "playwright test",
