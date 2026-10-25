@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { authenticate, isAdminToken, requireAdmin, requirePlayer, requireUser } from '../auth.js'
+import { authenticate, isAdminToken, isPlayerToken, requireAdmin, requirePlayer, requireUser } from '../auth.js'
 import { HttpError } from '../http.js'
 import { bearer, claimsFor, fakeVerify, tokenFor } from './helpers/fakeAuth.js'
 import { createFakeDb } from './helpers/fakeDb.js'
@@ -87,6 +87,25 @@ describe('isAdminToken', () => {
   })
 })
 
+describe('isPlayerToken', () => {
+  const withProvider = (provider: string, email?: string) => ({
+    uid: 'x', ...(email === undefined ? {} : { email }), firebase: { sign_in_provider: provider },
+  })
+  it.each([
+    ['google player', claimsFor('player'), true],
+    ['google without email', claimsFor('noEmail'), true],
+    ['google with admin email', claimsFor('googleAdminEmail'), false],
+    ['google with admin email, upper case', withProvider('google.com', 'AdminOX@Gmail.com'), false],
+    ['password non-admin', claimsFor('nonAdminPassword'), false],
+    ['password admin', claimsFor('admin'), false],
+    ['anonymous', withProvider('anonymous', 'player1@example.test'), false],
+    ['github.com', withProvider('github.com', 'player1@example.test'), false],
+    ['anonymous without email', withProvider('anonymous'), false],
+  ])('%s -> %s', (_name, claims, expected) => {
+    expect(isPlayerToken(claims)).toBe(expected)
+  })
+})
+
 describe('requirePlayer / requireAdmin', () => {
   it('requirePlayer lets players through and rejects the admin with 403 ADMIN_ACCOUNT', async () => {
     expect((await requirePlayer({ headers: bearer('player') }, fakeVerify)).uid).toBe('u1')
@@ -94,18 +113,30 @@ describe('requirePlayer / requireAdmin', () => {
     expect([err.status, err.code]).toEqual([403, 'ADMIN_ACCOUNT'])
   })
 
-  it('Google account with the admin email is a player, not admin', async () => {
-    expect((await requirePlayer({ headers: bearer('googleAdminEmail') }, fakeVerify)).isAdmin).toBe(false)
-    const err = await rejection(requireAdmin({ headers: bearer('googleAdminEmail') }, fakeVerify))
-    expect([err.status, err.code]).toEqual([403, 'FORBIDDEN'])
+  it('authenticate rejects non-admin password and Google-with-admin-email with 403 FORBIDDEN_ACCOUNT, touching no data', async () => {
+    const db = createFakeDb()
+    for (const kind of ['nonAdminPassword', 'googleAdminEmail'] as const) {
+      for (const fn of [authenticate, requireUser, requirePlayer, requireAdmin]) {
+        const err = await rejection(fn({ headers: bearer(kind) }, fakeVerify))
+        expect(err).toBeInstanceOf(HttpError)
+        expect([err.status, err.code]).toEqual([403, 'FORBIDDEN_ACCOUNT'])
+      }
+    }
+    expect(db.reads + db.writes).toBe(0)
   })
 
-  it('requireAdmin lets the admin through and rejects others with 403 FORBIDDEN', async () => {
-    expect((await requireAdmin({ headers: bearer('admin') }, fakeVerify)).isAdmin).toBe(true)
-    for (const kind of ['player', 'nonAdminPassword'] as const) {
-      const err = await rejection(requireAdmin({ headers: bearer(kind) }, fakeVerify))
-      expect([err.status, err.code]).toEqual([403, 'FORBIDDEN'])
+  it('rejects other providers (anonymous, github.com) with 403 FORBIDDEN_ACCOUNT', async () => {
+    for (const provider of ['anonymous', 'github.com']) {
+      const verify = async () => ({ ...claimsFor('player'), firebase: { sign_in_provider: provider } })
+      const err = await rejection(authenticate({ headers: { authorization: 'Bearer t' } }, verify))
+      expect([err.status, err.code]).toEqual([403, 'FORBIDDEN_ACCOUNT'])
     }
+  })
+
+  it('requireAdmin lets the admin through and rejects players with 403 FORBIDDEN', async () => {
+    expect((await requireAdmin({ headers: bearer('admin') }, fakeVerify)).isAdmin).toBe(true)
+    const err = await rejection(requireAdmin({ headers: bearer('player') }, fakeVerify))
+    expect([err.status, err.code]).toEqual([403, 'FORBIDDEN'])
   })
 
   it('both reject unauthenticated callers with 401', async () => {

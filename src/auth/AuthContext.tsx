@@ -5,7 +5,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { apiGet } from '@/web-app-ox/api/client'
+import { ApiError, apiGet } from '@/web-app-ox/api/client'
 import type { MeResponse } from '@/web-app-ox/api/types'
 import { loadAuth } from '@/web-app-ox/auth/authModule'
 import { getDisplayName, getInitials } from '@/web-app-ox/auth/displayName'
@@ -82,6 +82,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return data.isAdmin
     } catch (cause) {
       await auth.signOutUser()
+      // The server refuses accounts that are neither the admin nor a Google player (403):
+      // treat that exactly like "not an admin" so the page shows the generic message.
+      if (cause instanceof ApiError && cause.status === 403) return false
       throw cause
     }
   }, [])

@@ -74,6 +74,14 @@ describe.each(routes)('%s common behaviour', (_path, handler, method) => {
     expect(db.reads).toBe(0)
     expect(db.writes).toBe(0)
   })
+  it.each(['nonAdminPassword', 'googleAdminEmail'] as const)('%s -> 403 FORBIDDEN_ACCOUNT with zero db reads/writes', async (kind) => {
+    const r = await call(handler, method, kind, { difficulty: 'easy', gameId: 'g', cell: 0 })
+    expect(r.status).toBe(403)
+    expect(r.body).toEqual({ error: { code: 'FORBIDDEN_ACCOUNT', message: 'This account type is not allowed' } })
+    expect(db.reads).toBe(0)
+    expect(db.writes).toBe(0)
+    expect(db.all('users')).toHaveLength(0)
+  })
 })
 
 describe('unexpected backend failure', () => {
@@ -112,10 +120,14 @@ describe('GET /api/me', () => {
     expect(db.all('users')).toHaveLength(0)
     expect(db.writes).toBe(0)
   })
-  it('Google account with the admin email is a normal player', async () => {
-    const r = await call(meH, 'GET', 'googleAdminEmail')
-    expect(r.body.isAdmin).toBe(false)
-    expect(r.body.profile.displayName).toBe('Fake Admin')
+  it.each(['nonAdminPassword', 'googleAdminEmail'] as const)('%s -> 403 FORBIDDEN_ACCOUNT and no profile is created', async (kind) => {
+    const r = await call(meH, 'GET', kind)
+    expect(r.status).toBe(403)
+    expect(r.body.error.code).toBe('FORBIDDEN_ACCOUNT')
+    expect(db.all('users')).toHaveLength(0)
+    expect(db.peek('users', 'u3')).toBeUndefined()
+    expect(db.peek('users', 'u4')).toBeUndefined()
+    expect(db.writes).toBe(0)
   })
 })
 
@@ -124,7 +136,7 @@ describe('GET /api/leaderboard', () => {
     seedUser('a', { score: 3, wins: 3 })
     seedUser('b', { score: 5, wins: 5 })
     seedUser('c')
-    for (const kind of ['player', 'admin', 'nonAdminPassword'] as const) {
+    for (const kind of ['player', 'admin'] as const) {
       const r = await call(leaderboardH, 'GET', kind)
       expect(r.status).toBe(200)
       expect(r.body.players.map((p: { displayName: string }) => p.displayName)).toEqual(['b', 'a'])
@@ -154,12 +166,16 @@ describe('GET /api/admin/players', () => {
     expect(r.body.players).toHaveLength(2)
     expect(r.body.players[0]).toMatchObject({ uid: 'a', email: 'a@example.test', lastPlayedAt: null })
   })
-  it.each(['player', 'nonAdminPassword', 'googleAdminEmail'] as const)('%s -> 403 FORBIDDEN, no data read', async (kind) => {
+  it.each([
+    ['player', 'FORBIDDEN'],
+    ['nonAdminPassword', 'FORBIDDEN_ACCOUNT'],
+    ['googleAdminEmail', 'FORBIDDEN_ACCOUNT'],
+  ] as const)('%s -> 403 %s, no data read', async (kind, code) => {
     seedUser('a')
     db.resetCounters()
     const r = await call(adminPlayers, 'GET', kind)
     expect(r.status).toBe(403)
-    expect(r.body.error.code).toBe('FORBIDDEN')
+    expect(r.body.error.code).toBe(code)
     expect(JSON.stringify(r.body)).not.toContain('example.test')
     expect(db.reads).toBe(0)
   })

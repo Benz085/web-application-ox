@@ -27,6 +27,17 @@ export function isAdminToken(decoded: TokenClaims): boolean {
   )
 }
 
+/**
+ * Players sign in with Google only. Anything else (e.g. a self-registered Email/Password account,
+ * or a Google account that carries the admin's email) is neither a player nor the admin.
+ */
+export function isPlayerToken(decoded: TokenClaims): boolean {
+  return (
+    decoded.firebase.sign_in_provider === 'google.com' &&
+    decoded.email?.toLowerCase() !== ADMIN_EMAIL
+  )
+}
+
 const unauthenticated = () => new HttpError(401, 'UNAUTHENTICATED', 'Authentication required')
 
 async function defaultVerify(): Promise<VerifyIdToken> {
@@ -54,6 +65,9 @@ export async function authenticate(req: ReqLike, verify?: VerifyIdToken): Promis
     decoded = await verifier(token)
   } catch {
     throw unauthenticated()
+  }
+  if (!isAdminToken(decoded) && !isPlayerToken(decoded)) {
+    throw new HttpError(403, 'FORBIDDEN_ACCOUNT', 'This account type is not allowed')
   }
   return {
     uid: decoded.uid,
