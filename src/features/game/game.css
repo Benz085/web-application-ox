@@ -1,0 +1,273 @@
+.game {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .game {
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+}
+
+.game__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.game__status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.game__spinner {
+  width: 20px;
+  height: 20px;
+  border-width: 2.5px;
+}
+
+.game__meta {
+  margin: 0;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.game__alert {
+  align-self: center;
+  width: 100%;
+}
+
+.stats,
+.setup,
+.resume,
+.confirm,
+.gameover {
+  padding: var(--space-6);
+}
+
+.stats__title,
+.setup__title,
+.resume__title,
+.confirm__title {
+  margin: 0 0 var(--space-3);
+  font-size: 1.125rem;
+}
+
+.stats__label {
+  margin: var(--space-3) 0 0;
+  font-size: 0.875rem;
+  color: var(--text-subtle);
+}
+
+.stats__score {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.stats__streak {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  font-weight: 700;
+}
+
+.stats__dots {
+  display: inline-flex;
+  gap: var(--space-2);
+}
+
+.stats__dot {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  background: transparent;
+}
+
+.stats__dot--on {
+  background: var(--primary);
+}
+
+.stats__hint,
+.stats__rules {
+  margin: var(--space-1) 0 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.stats__record {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+  text-align: center;
+}
+
+.stats__record div {
+  padding: var(--space-2);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+}
+
+.stats__record dt {
+  font-size: 0.8125rem;
+  color: var(--text-subtle);
+}
+
+.stats__record dd {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.setup__options {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.setup__option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  font: inherit;
+  text-align: left;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.setup__option:hover:not(:disabled) {
+  border-color: #a5b4fc;
+}
+
+.setup__option--selected {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+}
+
+.setup__option:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.setup__option-name {
+  font-weight: 800;
+}
+
+.setup__option-text {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.setup__pill {
+  align-self: flex-start;
+  padding: 0 var(--space-3);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--primary-text);
+  background: var(--surface);
+  border: 1px solid var(--primary-soft-border);
+  border-radius: var(--radius-pill);
+}
+
+.setup__start {
+  width: 100%;
+  margin-top: var(--space-4);
+}
+
+.setup__note {
+  margin: var(--space-3) 0 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.resume {
+  background: var(--amber-soft);
+  border-color: var(--amber-border);
+}
+
+.resume__text,
+.confirm__text {
+  margin: 0 0 var(--space-4);
+  color: var(--text-muted);
+}
+
+.confirm {
+  border-color: var(--danger);
+}
+
+.confirm__actions,
+.gameover__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.gameover {
+  text-align: center;
+}
+
+.gameover__eyebrow {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.gameover__title {
+  margin: var(--space-1) 0;
+  font-size: 1.75rem;
+}
+
+.gameover__title:focus {
+  outline: none;
+}
+
+.gameover__detail {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.gameover__delta {
+  margin: var(--space-3) 0 0;
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.gameover--won .gameover__delta,
+.gameover--won .gameover__title {
+  color: var(--success-text);
+}
+
+.gameover--lost .gameover__delta,
+.gameover--lost .gameover__title {
+  color: var(--danger-text);
+}
+
+.gameover__points,
+.gameover__streak {
+  margin: var(--space-1) 0 0;
+}
+
+.gameover__actions {
+  justify-content: center;
+  margin-top: var(--space-6);
+}
